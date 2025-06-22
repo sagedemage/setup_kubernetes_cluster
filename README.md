@@ -9,9 +9,9 @@ Create a minikube cluster:
 minikube start
 ```
 
-Start a minikube cluster using VirtualBox
+Start a minikube cluster using Docker
 ```
-minikube start --driver=qemu2
+minikube start --driver=docker
 ```
 
 ## Add your user to docker group
