@@ -1,5 +1,7 @@
 # setup_kubernetes_cluster
 
+Setup a Kubernetes cluster with MongoDB, Mongo Express, Nginx, Prometheus, and Grafana
+
 ## Minikube Commands
 
 Create a minikube cluster:
