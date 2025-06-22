@@ -14,6 +14,28 @@ Start a minikube cluster using VirtualBox
 minikube start --driver=qemu2
 ```
 
+## Add your user to docker group
+
+Create the docker group
+```
+sudo groupadd docker
+```
+
+Add your user to the docker group
+```
+sudo usermod -aG docker $USER
+```
+
+Activate the changes to the group
+```
+newgrp docker
+```
+
+Verify docker commands run without sudo
+```
+docker run hello-world
+```
+
 Driver available:
 - kvm2
 - qemu2
@@ -34,6 +56,11 @@ minikube dashboard
 Halt the cluster
 ```
 minikube stop
+```
+
+Delete the cluster
+```
+minikube delete
 ```
 
 ## Kubctl Commands
@@ -161,3 +188,4 @@ kubectl apply -f mongo-express.yaml
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
   * [Run a Stateless Application Using a Deployment](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
+* [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
