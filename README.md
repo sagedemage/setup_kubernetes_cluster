@@ -9,7 +9,7 @@ Create a minikube cluster:
 minikube start
 ```
 
-Start a minikube cluster using Docker
+Create a minikube cluster using Docker (Recommended)
 ```
 minikube start --driver=docker
 ```
