@@ -135,6 +135,28 @@ echo -n 'password' | base64
 
 Copy the values in the secret file (mongodb-secret.yaml)
 
+## Start the cluster
+
+Deploy the secret
+```
+kubectl apply -f mongodb-secret.yaml
+```
+
+Deploy the MongoDB deployment and service
+```
+kubectl apply -f mongodb-config.yaml
+```
+
+Deploy the configmap
+```
+kubectl apply -f mongo-configmap.yaml
+```
+
+Deploy Mongo Express deployment and service
+```
+kubectl apply -f mongo-express.yaml
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
