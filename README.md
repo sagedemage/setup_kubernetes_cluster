@@ -189,6 +189,10 @@ Deploy Mongo Express deployment and service
 kubectl apply -f mongo-express.yaml
 ```
 
+## Default username and password for Mongo Express
+username: admin
+password: pass
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
