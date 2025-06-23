@@ -14,6 +14,11 @@ Create a minikube cluster using Docker (Recommended)
 minikube start --driver=docker
 ```
 
+Get logs for minikube and save them to a file called logs.txt
+```
+minikube logs --file logs.txt
+```
+
 ## Add your user to docker group
 
 Create the docker group
