@@ -189,6 +189,11 @@ Deploy Mongo Express deployment and service
 kubectl apply -f mongo-express.yaml
 ```
 
+Gain access to the Mongo Express admin interface on the web browser
+```
+minikube service mongo-express-service
+```
+
 ## Default username and password for Mongo Express
 username: admin
 password: pass
