@@ -169,6 +169,11 @@ Copy the values in the secret file (mongodb-secret.yaml)
 
 ## Start the cluster
 
+Deploy the Nginx deployment and service
+```
+kubectl apply -f nginx-deployment.yaml
+```
+
 Deploy the secret
 ```
 kubectl apply -f mongodb-secret.yaml
@@ -189,9 +194,15 @@ Deploy Mongo Express deployment and service
 kubectl apply -f mongo-express.yaml
 ```
 
+## Externally access the websites of the pods
 Gain access to the Mongo Express admin interface on the web browser
 ```
 minikube service mongo-express-service
+```
+
+Gain access to the Nginx web site
+```
+minikube service nginx-service
 ```
 
 ## Default username and password for Mongo Express
