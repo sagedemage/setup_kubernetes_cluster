@@ -171,7 +171,7 @@ Copy the values in the secret file (mongodb-secret.yaml)
 
 Deploy the Nginx deployment and service
 ```
-kubectl apply -f nginx-deployment.yaml
+kubectl apply -f nginx-config.yaml
 ```
 
 Deploy the secret
@@ -200,7 +200,7 @@ Gain access to the Mongo Express admin interface on the web browser
 minikube service mongo-express-service
 ```
 
-Gain access to the Nginx web site
+Gain access to the Nginx website
 ```
 minikube service nginx-service
 ```
