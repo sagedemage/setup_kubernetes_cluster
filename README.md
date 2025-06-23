@@ -194,7 +194,7 @@ Deploy Mongo Express deployment and service
 kubectl apply -f mongo-express.yaml
 ```
 
-## Externally access the websites of the pods
+## Externally access the services of the pods
 Gain access to the Mongo Express admin interface on the web browser
 ```
 minikube service mongo-express-service
