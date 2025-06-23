@@ -205,6 +205,11 @@ Gain access to the Nginx website
 minikube service nginx-service
 ```
 
+Do all of this in one command
+```
+minikube service mongo-express-service nginx-service
+```
+
 ## Default username and password for Mongo Express
 username: admin
 password: pass
