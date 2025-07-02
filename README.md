@@ -209,6 +209,23 @@ Create the production namespace
 kubectl create -f namespace-prod.yaml
 ```
 
+Get current context
+```
+kubectl config current-context
+```
+
+In my case, my current context is minikube
+
+Define development context
+```
+kubectl config set-context dev --namespace=development --cluster=minikube --user=minikube
+```
+
+Define production context
+```
+kubectl config set-context prod --namespace=production --cluster=minikube --user=minikube
+```
+
 ## Externally access the services of the pods
 Gain access to the Mongo Express admin interface on the web browser
 ```
