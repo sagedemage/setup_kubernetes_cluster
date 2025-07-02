@@ -95,6 +95,11 @@ List all the deployments
 kubectl get deployment
 ```
 
+List all the namespaces
+```
+kubectl get namespace
+```
+
 Create a deployment (for example create a nginx deployment)
 ```
 kubectl create deployment nginx-depl --image=nginx
