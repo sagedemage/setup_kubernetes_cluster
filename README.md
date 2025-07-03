@@ -163,6 +163,28 @@ For example apply yaml configuration file to a resource
 kubectl apply -f nginx-deployment.yaml
 ```
 
+kubectl config current-context
+
+Switch to the development namespace
+```
+kubectl config use-context dev
+```
+
+Check your current context
+```
+kubectl config current-context
+```
+
+Switch back to the minikube namespace or whatever your default namespace is called
+```
+kubectl config use-context minikube
+```
+
+If you don't know what your default namespace is called, run the command to get all the contexts
+```
+kubectl config get-contexts
+```
+
 ## Useful commands
 Create base64 encoded values for credentials
 ```
