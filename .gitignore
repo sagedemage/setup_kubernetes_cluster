@@ -1,2 +1,3 @@
 logs.txt
-secrets/mongodb-secret.yaml
+secrets/*.yaml
+!secrets/*-example.yaml
