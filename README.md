@@ -213,7 +213,7 @@ kubectl apply -f deployments_and_services/mongodb-config.yaml
 
 Deploy the configmap
 ```
-kubectl apply -f mongo-configmap.yaml
+kubectl apply -f configmaps/mongo-configmap.yaml
 ```
 
 Deploy Mongo Express deployment and service
