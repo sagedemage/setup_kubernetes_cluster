@@ -194,11 +194,11 @@ echo -n 'password' | base64
 
 Copy the values in the secret file (mongodb-secret.yaml)
 
-## Start and setup the cluster
+## Setup the cluster
 
 Deploy the Nginx deployment and service
 ```
-kubectl apply -f nginx-config.yaml
+kubectl apply -f deployments_and_services/nginx-config.yaml
 ```
 
 Deploy the secret
@@ -208,7 +208,7 @@ kubectl apply -f mongodb-secret.yaml
 
 Deploy the MongoDB deployment and service
 ```
-kubectl apply -f mongodb-config.yaml
+kubectl apply -f deployments_and_services/mongodb-config.yaml
 ```
 
 Deploy the configmap
@@ -218,17 +218,17 @@ kubectl apply -f mongo-configmap.yaml
 
 Deploy Mongo Express deployment and service
 ```
-kubectl apply -f mongo-express.yaml
+kubectl apply -f deployments_and_services/mongo-express.yaml
 ```
 
 Create the development namespace
 ```
-kubectl create -f namespace-dev.yaml
+kubectl create -f namespaces/namespace-dev.yaml
 ```
 
 Create the production namespace
 ```
-kubectl create -f namespace-prod.yaml
+kubectl create -f namespaces/namespace-prod.yaml
 ```
 
 Get current context
