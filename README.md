@@ -203,7 +203,7 @@ kubectl apply -f deployments_and_services/nginx-config.yaml
 
 Deploy the secret
 ```
-kubectl apply -f mongodb-secret.yaml
+kubectl apply -f secrets/mongodb-secret.yaml
 ```
 
 Deploy the MongoDB deployment and service
