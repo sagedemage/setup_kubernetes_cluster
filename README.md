@@ -253,6 +253,13 @@ Define production context
 kubectl config set-context prod --namespace=production --cluster=minikube --user=minikube
 ```
 
+Deploy the Ingress-Nginx controller
+```
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+```
+
 ## Externally access the services of the pods
 Gain access to the Mongo Express admin interface on the web browser
 ```
@@ -272,6 +279,27 @@ minikube service mongo-express-service nginx-service
 If you are not in the default namespace, specify the namespace for each of these commands like so
 ```
 minikube service mongo-express-service -n development
+```
+
+## Ingress-Nginx Controller Setup
+Expose the nginx-deployment
+```
+kubectl expose deployment nginx-deployment
+```
+
+Create ingress resource
+```
+kubectl create ingress nginx-localhost --class=nginx --rule="nginx.localdev.me/*=nginx-deployment:80"
+```
+
+Forward a local port to the ingress controller
+```
+kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
+```
+
+Access the deployment via curl
+```
+curl --resolve nginx.localdev.me:8080:127.0.0.1 http://nginx.localdev.me:8080
 ```
 
 ## Default username and password for Mongo Express
