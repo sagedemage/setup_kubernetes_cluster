@@ -264,6 +264,11 @@ Do all of this in one command
 minikube service mongo-express-service nginx-service
 ```
 
+If you are not in the default namespace, specify the namespace for each of these commands like so
+```
+minikube service mongo-express-service -n development
+```
+
 ## Default username and password for Mongo Express
 username: admin
 password: pass
