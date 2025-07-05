@@ -185,6 +185,11 @@ If you don't know what your default namespace is called, run the command to get 
 kubectl config get-contexts
 ```
 
+View current context
+```
+kubectl config view
+```
+
 ## Useful commands
 Create base64 encoded values for credentials
 ```
