@@ -326,10 +326,29 @@ If the external IP address is still pending, run this command to connect to the 
 minikube tunnel
 ```
 
-Create ingress resource
+Create an ingress resource
 ```
-kubectl create ingress nginx-ingress --class=nginx --rule="www.nginx.demo.io/*=nginx-deployment:80"
+kubectl apply -f ingress/nginx-ingress.yaml
 ```
+
+Edit the hosts file
+```
+sudo vim /etc/hosts
+```
+
+Add this line to the hosts file
+```
+...
+192.168.49.2    nginx.demo.io
+```
+
+To get the address of the ingress, type this command
+```
+kubectl get ingress
+```
+
+If everything goes well, you should be able to access the website at http://nginx.demo.io/.
+Great job, the public website you are serving is hosted on a Kubernetes cluster!
 
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
