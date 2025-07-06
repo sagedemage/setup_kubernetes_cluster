@@ -17,3 +17,7 @@ spec:
                 name: nginx-service
                 port: 
                   number: 80
+  tls:
+    - hosts:
+      - nginx.demo.io
+      secretName: tls-secret
