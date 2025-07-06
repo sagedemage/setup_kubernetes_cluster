@@ -260,6 +260,11 @@ helm upgrade --install ingress-nginx ingress-nginx \
   --namespace ingress-nginx --create-namespace
 ```
 
+Install the ingress controller via the minikube's addons system
+```
+minikube addons enable ingress
+```
+
 ## Externally access the services of the pods
 Gain access to the Mongo Express admin interface on the web browser
 ```
@@ -281,7 +286,14 @@ If you are not in the default namespace, specify the namespace for each of these
 minikube service mongo-express-service -n development
 ```
 
+## Default username and password for Mongo Express
+username: admin
+password: pass
+
 ## Ingress-Nginx Controller Setup
+
+### Local testing
+
 Expose the nginx-deployment
 ```
 kubectl expose deployment nginx-deployment
@@ -302,9 +314,22 @@ Access the deployment via curl
 curl --resolve nginx.localdev.me:8080:127.0.0.1 http://nginx.localdev.me:8080
 ```
 
-## Default username and password for Mongo Express
-username: admin
-password: pass
+### Online testing
+
+See the external IP address to the ingress controller is available
+```
+kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+```
+
+If the external IP address is still pending, run this command to connect to the LoadBalancer service
+```
+minikube tunnel
+```
+
+Create ingress resource
+```
+kubectl create ingress nginx-ingress --class=nginx --rule="www.nginx.demo.io/*=nginx-deployment:80"
+```
 
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
@@ -313,3 +338,4 @@ password: pass
   * [Namespaces Walkthrough](https://kubernetes.io/docs/tutorials/cluster-management/namespaces-walkthrough/)
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
+* [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
