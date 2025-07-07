@@ -350,6 +350,13 @@ kubectl get ingress
 If everything goes well, you should be able to access the website at http://nginx.demo.io/.
 Great job, the public website you are serving is hosted on a Kubernetes cluster!
 
+## Port Forwarding using Kubectl
+
+Port forward the nginx-service to 127.0.0.1:8080. Access the website at http://127.0.0.1:8080 or http://localhost:8080.
+```
+kubectl port-forward service/nginx-service 8080:80
+```
+
 ## Setup TLS Certificate for HTTPS
 
 Generate a private key
