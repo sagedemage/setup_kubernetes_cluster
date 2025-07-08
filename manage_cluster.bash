@@ -23,8 +23,6 @@ case "$1" in
         kubectl delete configmaps --all --force --grace-period=0
         kubectl delete ingress --all --force --grace-period=0
         kubectl delete storageclasses --all --force --grace-period=0
-        kubectl delete pv --all --force --grace-period=0
-        kubectl delete pvc --all --force --grace-period=0
         kubectl delete statefulsets --all --force --grace-period=0
         kubectl delete cronjobs --all --force --grace-period=0
         kubectl delete pods --all --force --grace-period=0
