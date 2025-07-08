@@ -163,7 +163,10 @@ For example apply yaml configuration file to a resource
 kubectl apply -f nginx-deployment.yaml
 ```
 
+Get the current context of the cluster
+```
 kubectl config current-context
+```
 
 Switch to the development namespace
 ```
