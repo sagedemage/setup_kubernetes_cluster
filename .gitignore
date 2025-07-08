@@ -2,3 +2,4 @@ logs.txt
 secrets/*.yaml
 !secrets/*-example.yaml
 tls_certificate/
+keyfiles/
