@@ -188,7 +188,7 @@ If you don't know what your default namespace is called, run the command to get 
 kubectl config get-contexts
 ```
 
-View current context
+Display a specified kubeconfig file
 ```
 kubectl config view
 ```
