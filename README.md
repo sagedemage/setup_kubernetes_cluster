@@ -278,6 +278,16 @@ Create the PersistentVolume and PersistentVolumeClaim for MongoDB
 kubectl apply -f pv-pvc/mongo-pv-pvc.yaml
 ```
 
+Generate the mongodb-keyfile via openssl
+```
+bash -c "openssl rand -base64 756 > keyfiles/mongodb-keyfile"
+```
+
+Create Kubernetes secret to store the keyfile
+```
+kubectl create secret generic mongodb-keyfile --from-file=keyfiles/mongodb-keyfile
+```
+
 Apply the StatefulSet to your cluster
 ```
 kubectl apply -f statefulsets/mongo-statefulset.yaml
@@ -472,12 +482,6 @@ ls
 ```
 
 ## Backup and restore MongoDB
-
-Create Kubernetes secret to store the keyfile
-```
-bash -c "openssl rand -base64 756 > keyfiles/mongodb-keyfile"
-kubectl create secret generic mongodb-keyfile --from-file=keyfiles/mongodb-keyfile
-```
 
 Go inside the backup-access pod in a terminal
 ```
