@@ -309,6 +309,7 @@ kubectl apply -f pods/backup-access.yaml
 ```
 
 ## Externally access the services of the pods
+
 Gain access to the Mongo Express admin interface on the web browser
 ```
 minikube service mongo-express-service
@@ -330,6 +331,7 @@ minikube service mongo-express-service -n development
 ```
 
 ## Default username and password for Mongo Express
+
 username: admin
 password: pass
 
