@@ -19,6 +19,10 @@ case "$1" in
         kubectl delete ingress --all
         echo -e "\nDelete all the resources of the cluster."
         ;;
+    "switch-to-dev")
+        kubectl config use-context dev
+        kubectl config get-contexts
+        ;;
     "create-namespaces")
         kubectl create -f namespaces/
         ;;
@@ -26,6 +30,7 @@ case "$1" in
         echo "start-minikube            start a minikube cluster using Docker"
         echo "apply-all                 apply all the configurations to resources for the cluster"
         echo "delete-all                delete all the resources of the cluster"
+        echo "switch-to-dev             switch to the development namespace"
         echo "create-namespaces         create all namespaces for the cluster"
         ;;
 esac
