@@ -285,7 +285,7 @@ Create the PersistentVolume and PersistentVolumeClaim for storing backups
 kubectl apply -f pv-pvc/backup-pv-pvc.yaml
 ```
 
-Create the CronJob for backing up MongoDB using mongodump
+Create the CronJob for backing up MongoDB automatically using mongodump
 ```
 kubectl apply -f cronjobs/mongodb-backup-cronjob.yaml
 ```
