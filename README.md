@@ -265,6 +265,36 @@ Install the ingress controller via the minikube's addons system
 minikube addons enable ingress
 ```
 
+Create the StorageClass for local storage
+```
+kubectl apply -f storageclasses/fast-storage-storageclass.yaml
+```
+
+Create the PersistentVolume and PersistentVolumeClaim for MongoDB
+```
+kubectl apply -f pv-pvc/mongo-pv-pvc.yaml
+```
+
+Apply the StatefulSet to your cluster
+```
+kubectl apply -f statefulsets/mongo-statefulset.yaml
+```
+
+Create the PersistentVolume and PersistentVolumeClaim for storing backups
+```
+kubectl apply -f pv-pvc/backup-pv-pvc.yaml
+```
+
+Create the CronJob for backing up MongoDB using mongodump
+```
+kubectl apply -f cronjobs/mongodb-backup-cronjob.yaml
+```
+
+Create a pod to access backup files
+```
+kubectl apply -f pods/backup-access.yaml
+```
+
 ## Externally access the services of the pods
 Gain access to the Mongo Express admin interface on the web browser
 ```
@@ -415,6 +445,47 @@ Allow http service
 sudo firewall-cmd --add-service=http --permanent
 ```
 
+## Verify the backup of MongoDB via mongodump works
+
+Get the name of the pod of the mongodb-backup
+```
+kubectl get pods
+```
+
+Verify the backup was created successfully
+```
+kubectl logs mongodb-backup-29200222-j48wk
+```
+
+Access the backup-access pod
+```
+kubectl exec -it backup-access -- bash
+```
+
+Inside the pod, navigate the /backup directory to view the backup files
+```
+cd /backup
+ls
+```
+
+## Backup and restore MongoDB
+
+Create Kubernetes secret to store the keyfile
+```
+bash -c "openssl rand -base64 756 > keyfiles/mongodb-keyfile"
+kubectl create secret generic mongodb-keyfile --from-file=keyfiles/mongodb-keyfile
+```
+
+Go inside the backup-access pod in a terminal
+```
+kubectl exec -it backup-access -- bash
+```
+
+Restore a dumb of MongoDB to recover the database after a failure or crash
+```
+mongorestore --host=mongodb-service --port 27017 backup/2025-07-08T21-50-01/ --username <your_username> --password <your_password>
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
@@ -423,3 +494,4 @@ sudo firewall-cmd --add-service=http --permanent
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
+* [Ensuring High Availability for MongoDB on Kubernetes - MongoDB](https://www.mongodb.com/developer/products/mongodb/mongodb-with-kubernetes/)
