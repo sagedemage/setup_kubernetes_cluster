@@ -495,6 +495,20 @@ Restore a dumb of MongoDB to recover the database after a failure or crash
 mongorestore --host=mongodb-service --port 27017 backup/2025-07-08T21-50-01/ --username <your_username> --password <your_password>
 ```
 
+## Properly remove the pv and pvc resources
+
+Make finalizers null
+```
+kubectl patch pv <pv-name> -p '{"metadata":{"finalizers":null}}'
+kubectl patch pvc <pvc-name> -p '{"metadata":{"finalizers":null}}'
+```
+
+Delete all of the pv and pvc resources
+```
+kubectl delete pv --all --force --grace-period=0
+kubectl delete pvc --all --force --grace-period=0
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
