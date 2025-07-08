@@ -17,17 +17,17 @@ case "$1" in
         echo -e "\nApply all the configurations to resources for the cluster."
         ;;
     "delete-all")
-        kubectl delete deployments --all
-        kubectl delete services --all
-        kubectl delete secrets --all
-        kubectl delete configmaps --all
-        kubectl delete ingress --all
-        kubectl delete storageclasses --all
-        kubectl delete pv --all
-        kubectl delete pvc --all
-        kubectl delete statefulsets --all
-        kubectl delete cronjobs --all
-        kubectl delete pods --all
+        kubectl delete deployments --all --force --grace-period=0
+        kubectl delete services --all --force --grace-period=0
+        kubectl delete secrets --all --force --grace-period=0
+        kubectl delete configmaps --all --force --grace-period=0
+        kubectl delete ingress --all --force --grace-period=0
+        kubectl delete storageclasses --all --force --grace-period=0
+        kubectl delete pv --all --force --grace-period=0
+        kubectl delete pvc --all --force --grace-period=0
+        kubectl delete statefulsets --all --force --grace-period=0
+        kubectl delete cronjobs --all --force --grace-period=0
+        kubectl delete pods --all --force --grace-period=0
         echo -e "\nDelete all the resources of the cluster."
         ;;
     "switch-to-dev")
