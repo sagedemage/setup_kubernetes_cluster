@@ -9,6 +9,11 @@ case "$1" in
         kubectl apply -f configmaps/
         kubectl apply -f ingress/
         kubectl apply -f secrets/mongodb-secret.yaml
+        kubectl apply -f storageclasses/
+        kubectl apply -f pv-pvc/
+        kubectl apply -f statefulsets/
+        kubectl apply -f cronjobs/
+        kubectl apply -f pods/
         echo -e "\nApply all the configurations to resources for the cluster."
         ;;
     "delete-all")
@@ -17,6 +22,12 @@ case "$1" in
         kubectl delete secrets --all
         kubectl delete configmaps --all
         kubectl delete ingress --all
+        kubectl delete storageclasses --all
+        kubectl delete pv --all
+        kubectl delete pvc --all
+        kubectl delete statefulsets --all
+        kubectl delete cronjobs --all
+        kubectl delete pods --all
         echo -e "\nDelete all the resources of the cluster."
         ;;
     "switch-to-dev")
