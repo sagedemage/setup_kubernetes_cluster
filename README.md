@@ -541,17 +541,24 @@ use imdb
 
 Add document of a movie in the movies collection
 ```
-db.movies.insert(
+db.movies.insert({"name": "Ghost in the Shell","year": "1995","rating": "7.9","director": "Mamoru Oshii","writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]})
 ```
 
-Next line
+### mongosh commands
+
+Show all the databases on the server
 ```
-{"name": "Ghost in the Shell","year": "1995","rating": "7.9","director": "Mamoru Oshii","writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]}
+show dbs
 ```
 
-Last line
+Retrieve all of the collections in the currently selected database
 ```
-)
+show collections
+```
+
+Show a list of all the objects in the movies collection
+```
+db.movies.find()
 ```
 
 ## Resources
@@ -563,3 +570,5 @@ Last line
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
 * [Ensuring High Availability for MongoDB on Kubernetes - MongoDB](https://www.mongodb.com/developer/products/mongodb/mongodb-with-kubernetes/)
+* [How to Create a Database in MongoDB - MongoDB](https://www.mongodb.com/resources/products/fundamentals/create-database)
+* [How To Use the MongoDB Shell - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-the-mongodb-shell)
