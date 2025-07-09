@@ -528,6 +528,32 @@ kubectl delete pvc --all --force --grace-period=0
 }
 ```
 
+### Via mongosh
+Gain access to the mongodb shell
+```
+kubectl exec -it mongodb-deployment-6d9d7c68f6-58clf -- mongosh --username <your_username> --password <your_password>
+```
+
+Switch to the imdb database
+```
+use imdb
+```
+
+Add document of a movie in the movies collection
+```
+db.movies.insert(
+```
+
+Next line
+```
+{"name": "Ghost in the Shell","year": "1995","rating": "7.9","director": "Mamoru Oshii","writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]}
+```
+
+Last line
+```
+)
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
