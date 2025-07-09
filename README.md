@@ -561,6 +561,21 @@ Show a list of all the objects in the movies collection
 db.movies.find()
 ```
 
+Delete only one document that matches a condition
+```
+db.movies.deleteOne({_id: ObjectId('686dcf1831ecc5d86abaa8bb')})
+```
+
+Remove a collection called movies1
+```
+db.movies1.drop()
+```
+
+Remove the current database
+```
+db.dropDatabase()
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
@@ -572,3 +587,6 @@ db.movies.find()
 * [Ensuring High Availability for MongoDB on Kubernetes - MongoDB](https://www.mongodb.com/developer/products/mongodb/mongodb-with-kubernetes/)
 * [How to Create a Database in MongoDB - MongoDB](https://www.mongodb.com/resources/products/fundamentals/create-database)
 * [How To Use the MongoDB Shell - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-the-mongodb-shell)
+* [Delete Documents - MongoDB](https://www.mongodb.com/docs/mongodb-shell/crud/delete/)
+* [db.collection.drop() (mongosh method) - MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.collection.drop/)
+* [db.dropDatabase() (mongosh method) - MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.dropDatabase/)
