@@ -509,6 +509,70 @@ kubectl delete pv --all --force --grace-period=0
 kubectl delete pvc --all --force --grace-period=0
 ```
 
+## Configure replica set for MongoDB
+
+Go to one of the Mongo StatefulSet pods. Usually, you would use the first pod (ex: mongo-sfs-0).
+```
+kubectl exec -it mongo-sfs-0 -- mongosh
+```
+
+Initliaze the replica set
+```
+rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "10.244.1.201:27017", priority: 2 },
+    { _id: 1, host: "10.244.1.202:27017", priority: 1 },
+    { _id: 2, host: "10.244.1.203:27017", priority: 1 }
+  ]
+})
+```
+
+Use these commands to get the IP addresses of the hosts for mongo-sfs-0, mongo-sfs-1, and mongo-sfs-2
+```
+kubectl get pod mongo-sfs-0 -o wide
+kubectl get pod mongo-sfs-1 -o wide
+kubectl get pod mongo-sfs-2 -o wide
+```
+
+To check if the pod is primary, use this command
+```
+rs.status()
+```
+
+Delete replica set if needed
+```
+db.getSiblingDB('local').dropDatabase()
+```
+
+## Performing failover and recovery testing
+
+Identify the current primary node
+```
+kubectl exec -it mongo-sfs-0 -- mongosh --eval "rs.status()"
+```
+
+Delete the current primary node pod to simulate a failure
+```
+kubectl delete pod mongo-sfs-0
+```
+
+Monitor the status of the replica set. There will be an election of a new primary
+```
+kubectl exec -it mongo-sfs-1 -- mongosh --eval "rs.status()"
+```
+
+Verify that the deleted pod has been recreated. The deleted pod will rejoin the replica set as a secondary node:
+```
+kubectl get pods
+```
+
+Check the replica set status again. You want to make sure that the new node is now re-elected as the primary because
+it had the highest priority
+```
+kubectl exec -it mongo-sfs-0 -- mongosh --eval "rs.status()"
+```
+
 ## Add a movie to MongoDB
 
 ### Via Mongo Express
