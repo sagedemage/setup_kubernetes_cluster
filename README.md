@@ -483,7 +483,7 @@ cd /backup
 ls
 ```
 
-## Backup and restore MongoDB
+## Restore MongoDB via a backup
 
 Go inside the backup-access pod in a terminal
 ```
