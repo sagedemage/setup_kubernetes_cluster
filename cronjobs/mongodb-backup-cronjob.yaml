@@ -16,7 +16,7 @@ spec:
                 - -c
                 - |
                   # Perform backup
-                  mongodump --host=mongodb-service --port=27017 --out=/backup/$(date +\%Y-\%m-\%dT\%H-\%M-\%S) --username $MONGODB_ROOT_USERNAME --password $MONGODB_ROOT_PASSWORD
+                  mongodump --host=$MONGODB_HOSTNAME --port=27017 --out=/backup/$(date +\%Y-\%m-\%dT\%H-\%M-\%S) --username $MONGODB_ROOT_USERNAME --password $MONGODB_ROOT_PASSWORD
                   # Remove backups older than 7 days
                   find /backup -type d -mtime +7 -exec rm -rf {} +
               env:
@@ -30,6 +30,11 @@ spec:
                     secretKeyRef:
                       name: mongodb-secret
                       key: mongo-root-password
+                - name: MONGODB_HOSTNAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: mongodb-configmap
+                      key: database_url
               volumeMounts:
                 - name: backup-storage
                   mountPath: /backup
