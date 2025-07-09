@@ -35,12 +35,16 @@ case "$1" in
     "create-namespaces")
         kubectl create -f namespaces/
         ;;
+    "create-secrets-from-file")
+        kubectl create secret generic mongodb-keyfile --from-file=keyfiles/mongodb-keyfile
+        ;;
     *)
-        echo "start-minikube            start a minikube cluster using Docker"
-        echo "apply-all                 apply all the configurations to resources for the cluster"
-        echo "delete-all                delete all the resources of the cluster"
-        echo "switch-to-dev             switch to the development namespace"
-        echo "create-namespaces         create all namespaces for the cluster"
+        echo "start-minikube                start a minikube cluster using Docker"
+        echo "apply-all                     apply all the configurations to resources for the cluster"
+        echo "delete-all                    delete all the resources of the cluster"
+        echo "switch-to-dev                 switch to the development namespace"
+        echo "create-namespaces             create all namespaces for the cluster"
+        echo "create-secrets-from-file      create all secrets from a file"
         ;;
 esac
 
