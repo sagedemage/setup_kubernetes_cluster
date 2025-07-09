@@ -509,6 +509,25 @@ kubectl delete pv --all --force --grace-period=0
 kubectl delete pvc --all --force --grace-period=0
 ```
 
+## Add a movie to MongoDB
+
+### Via Mongo Express
+1. Create a database called "imdb"
+
+2. Create a collection called "movies"
+
+3. Add document of a movie in the movies collection
+```
+{
+      "_id": ObjectId(),
+      "name": "Ghost in the Shell",
+    	"year": "1995",
+    	"rating": "7.9",
+    	"director": "Mamoru Oshii",
+    	"writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]
+}
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
