@@ -695,6 +695,12 @@ Use curl command with kubectl
 kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 192.168.49.2:30001
 ```
 
+## Delete Minikube Cluster
+Delete minikube and all its files
+```
+minikube delete --all --purge
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
@@ -709,3 +715,4 @@ kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never
 * [Delete Documents - MongoDB](https://www.mongodb.com/docs/mongodb-shell/crud/delete/)
 * [db.collection.drop() (mongosh method) - MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.collection.drop/)
 * [db.dropDatabase() (mongosh method) - MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.dropDatabase/)
+* [deleting minikube cluster so I can create a larger cluster with more CPUs - Stack Overflow](https://stackoverflow.com/questions/72147700/deleting-minikube-cluster-so-i-can-create-a-larger-cluster-with-more-cpus#:~:text=I%20run%20minikube%20with%20--,294)
