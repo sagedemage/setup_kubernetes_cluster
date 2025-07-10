@@ -659,36 +659,6 @@ kubectl delete pv --all --force --grace-period=0
 kubectl delete pvc --all --force --grace-period=0
 ```
 
-## Recreate the default CoreDNS setup
-
-Get the CoreDNS deployment (usually called coredns)
-```
-kubectl get deployments -n kube-system
-```
-
-Get the CoreDNS service (usually called kube-dns or coredns)
-```
-kubectl get services -n kube-system
-```
-
-Delete the CoreDNS deployment
-```
-kubectl delete deployment coredns -n kube-system
-```
-
-Delete the CoreDNS service
-```
-kubectl delete service kube-dns -n kube-system
-```
-
-Kubernetes will automatically recreate CoreDNS deployment and services
-
-Install and setup CoreDNS
-```
-helm repo add coredns https://coredns.github.io/helm
-helm --namespace=kube-system install coredns coredns/coredns
-```
-
 ## Useful kubectl utilities
 Use curl command with kubectl
 ```
