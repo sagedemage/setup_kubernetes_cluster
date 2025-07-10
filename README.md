@@ -517,14 +517,14 @@ Go to one of the Mongo StatefulSet pods. Usually, you would use the first pod (e
 kubectl exec -it mongo-sfs-0 -- mongosh
 ```
 
-Initliaze the replica set
+Initialize the replica set
 ```
 rs.initiate({
   _id: "rs0",
   members: [
-    { _id: 0, host: "mongo-sfs-0:27017", priority: 2 },
-    { _id: 1, host: "mongo-sfs-1:27017", priority: 1 },
-    { _id: 2, host: "mongo-sfs-2:27017", priority: 1 }
+    { _id: 0, host: "mongo-sfs-0.mongo-sfs-service.development.svc.cluster.local:27017", priority: 2 },
+    { _id: 1, host: "mongo-sfs-1.mongo-sfs-service.development.svc.cluster.local:27017", priority: 1 },
+    { _id: 2, host: "mongo-sfs-2.mongo-sfs-service.development.svc.cluster.local:27017", priority: 1 }
   ]
 })
 ```
@@ -534,9 +534,9 @@ Reconfigure the replica set if it had been initialized
 rs.reconfig({
   _id: "rs0",
   members: [
-    { _id: 0, host: "mongo-sfs-0:27017", priority: 2 },
-    { _id: 1, host: "mongo-sfs-1:27017", priority: 1 },
-    { _id: 2, host: "mongo-sfs-2:27017", priority: 1 }
+    { _id: 0, host: "mongo-sfs-0.mongo-sfs-service.development.svc.cluster.local:27017", priority: 2 },
+    { _id: 1, host: "mongo-sfs-1.mongo-sfs-service.development.svc.cluster.local:27017", priority: 1 },
+    { _id: 2, host: "mongo-sfs-2.mongo-sfs-service.development.svc.cluster.local:27017", priority: 1 }
   ]
 },
 {
@@ -608,9 +608,17 @@ Switch to the imdb database
 use imdb
 ```
 
-Add document of a movie in the movies collection
+Add a document of the movie in the movies collection
 ```
-db.movies.insert({"name": "Ghost in the Shell","year": "1995","rating": "7.9","director": "Mamoru Oshii","writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]})
+db.movies.insertOne(
+  {
+    "name": "Ghost in the Shell",
+    "year": "1995",
+    "rating": "7.9",
+    "director": "Mamoru Oshii",
+    "writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]
+  }
+)
 ```
 
 ### mongosh commands
