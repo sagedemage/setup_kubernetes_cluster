@@ -204,9 +204,14 @@ Copy the values in the secret file (mongodb-secret.yaml)
 
 ## Setup the cluster
 
-Deploy the Nginx deployment and service
+Deploy the Nginx deployment
 ```
-kubectl apply -f deployments_and_services/nginx-config.yaml
+kubectl apply -f deployments/nginx-config.yaml
+```
+
+Deploy the Nginx service
+```
+kubectl apply -f services/nginx-service.yaml
 ```
 
 Deploy the secret
@@ -214,9 +219,14 @@ Deploy the secret
 kubectl apply -f secrets/mongodb-secret.yaml
 ```
 
-Deploy the MongoDB deployment and service
+Deploy the MongoDB deployment
 ```
-kubectl apply -f deployments_and_services/mongodb-config.yaml
+kubectl apply -f deployments/mongodb-config.yaml
+```
+
+Deploy the MongoDB service
+```
+kubectl apply -f services/mongodb-service.yaml
 ```
 
 Deploy the configmap
@@ -224,9 +234,14 @@ Deploy the configmap
 kubectl apply -f configmaps/mongo-configmap.yaml
 ```
 
-Deploy Mongo Express deployment and service
+Deploy Mongo Express deployment
 ```
-kubectl apply -f deployments_and_services/mongo-express.yaml
+kubectl apply -f deployments/mongo-express.yaml
+```
+
+Deploy Mongo Express service
+```
+kubectl apply -f services/mongo-express-service.yaml
 ```
 
 Create the development namespace
