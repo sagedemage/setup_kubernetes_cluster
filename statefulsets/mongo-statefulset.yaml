@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: mongo-sfs
 spec:
-  serviceName: mongodb-service
+  serviceName: mongo-sfs-service
   replicas: 3
   selector:
     matchLabels:
@@ -14,7 +14,7 @@ spec:
         app: mongo-sfs
     spec:
       containers:
-        - name: mongodb
+        - name: mongo-sfs
           image: mongo
           command:
             - mongod
