@@ -507,28 +507,32 @@ Initliaze the replica set
 rs.initiate({
   _id: "rs0",
   members: [
-    { _id: 0, host: "10.244.1.201:27017", priority: 2 },
-    { _id: 1, host: "10.244.1.202:27017", priority: 1 },
-    { _id: 2, host: "10.244.1.203:27017", priority: 1 }
+    { _id: 0, host: "mongo-sfs-0:27017", priority: 2 },
+    { _id: 1, host: "mongo-sfs-1:27017", priority: 1 },
+    { _id: 2, host: "mongo-sfs-2:27017", priority: 1 }
   ]
 })
 ```
 
-Use these commands to get the IP addresses of the hosts for mongo-sfs-0, mongo-sfs-1, and mongo-sfs-2
+Reconfigure the replica set if it had been initialized
 ```
-kubectl get pod mongo-sfs-0 -o wide
-kubectl get pod mongo-sfs-1 -o wide
-kubectl get pod mongo-sfs-2 -o wide
+rs.reconfig({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "mongo-sfs-0:27017", priority: 2 },
+    { _id: 1, host: "mongo-sfs-1:27017", priority: 1 },
+    { _id: 2, host: "mongo-sfs-2:27017", priority: 1 }
+  ]
+},
+{
+  "force" : true,
+  "maxTimeMS" : 0
+})
 ```
 
 To check if the pod is primary, use this command
 ```
 rs.status()
-```
-
-Delete replica set if needed
-```
-db.getSiblingDB('local').dropDatabase()
 ```
 
 ## Performing failover and recovery testing
