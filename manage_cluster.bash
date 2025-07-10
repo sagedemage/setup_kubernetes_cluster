@@ -5,7 +5,8 @@ case "$1" in
         minikube start --driver=docker
         ;;
     "apply-all")
-        kubectl apply -f deployments_and_services/
+        kubectl apply -f deployments/
+        kubectl apply -f services/
         kubectl apply -f configmaps/
         kubectl apply -f ingress/
         kubectl apply -f secrets/mongodb-secret.yaml
