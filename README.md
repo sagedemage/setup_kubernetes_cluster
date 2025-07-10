@@ -673,7 +673,7 @@ Use curl command with kubectl
 kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 192.168.49.2:30001
 ```
 
-## Delete Minikube Cluster
+## Delete the minikube Cluster
 Delete minikube and all its files
 ```
 minikube delete --all --purge
