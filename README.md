@@ -674,6 +674,12 @@ helm repo add coredns https://coredns.github.io/helm
 helm --namespace=kube-system install coredns coredns/coredns
 ```
 
+## Useful kubectl utilities
+Use curl command with kubectl
+```
+kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 192.168.49.2:30001
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
