@@ -176,9 +176,9 @@ password: pass
 
 [Ingress-Nginx Controller Setup](./docs/ingress-nginx_controller_setup.md)
 
-## firealld-cmd commands
+## firewall-cmd commands
 
-[firealld-cmd commands](./docs/firealld-cmd_commands.md)
+[firewall-cmd commands](./docs/firewall-cmd_commands.md)
 
 ## Verify the backup of MongoDB via mongodump works
 

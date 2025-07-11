@@ -1,4 +1,4 @@
-# firealld-cmd commands
+# firewall-cmd commands
 
 List available ports
 ```
