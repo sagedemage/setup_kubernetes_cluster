@@ -174,63 +174,7 @@ password: pass
 
 ## Ingress-Nginx Controller Setup
 
-### Local testing
-
-Expose the nginx-deployment
-```
-kubectl expose deployment nginx-deployment
-```
-
-Create ingress resource
-```
-kubectl create ingress nginx-localhost --class=nginx --rule="nginx.localdev.me/*=nginx-deployment:80"
-```
-
-Forward a local port to the ingress controller
-```
-kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
-```
-
-Access the deployment via curl
-```
-curl --resolve nginx.localdev.me:8080:127.0.0.1 http://nginx.localdev.me:8080
-```
-
-### Online testing
-
-See the external IP address to the ingress controller is available
-```
-kubectl get service ingress-nginx-controller --namespace=ingress-nginx
-```
-
-If the external IP address is still pending, run this command to connect to the LoadBalancer service
-```
-minikube tunnel
-```
-
-Create an ingress resource
-```
-kubectl apply -f ingress/nginx-ingress.yaml
-```
-
-Edit the hosts file
-```
-sudo vim /etc/hosts
-```
-
-Add this line to the hosts file
-```
-...
-192.168.49.2    nginx.demo.io
-```
-
-To get the address of the ingress, type this command
-```
-kubectl get ingress
-```
-
-If everything goes well, you should be able to access the website at http://nginx.demo.io/.
-Great job, the public website you are serving is hosted on a Kubernetes cluster!
+[Ingress-Nginx Controller Setup](./docs/ingress-nginx_controller_setup.md)
 
 ## Setup TLS Certificate for HTTPS
 
