@@ -581,6 +581,7 @@ kubectl exec -it mongo-sfs-0 -- mongosh --eval "rs.status()"
 ## Add a movie to MongoDB
 
 ### Via Mongo Express
+
 1. Create a database called "imdb"
 
 2. Create a collection called "movies"
@@ -598,6 +599,7 @@ kubectl exec -it mongo-sfs-0 -- mongosh --eval "rs.status()"
 ```
 
 ### Via mongosh
+
 Gain access to the mongodb shell
 ```
 kubectl exec -it mongodb-deployment-6d9d7c68f6-58clf -- mongosh --username <your_username> --password <your_password>
@@ -668,12 +670,14 @@ kubectl delete pvc --all --force --grace-period=0
 ```
 
 ## Useful kubectl utilities
+
 Use curl command with kubectl
 ```
 kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 192.168.49.2:30001
 ```
 
 ## Delete the minikube Cluster
+
 Delete minikube and all its files
 ```
 minikube delete --all --purge
