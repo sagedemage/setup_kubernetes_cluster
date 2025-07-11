@@ -14,9 +14,41 @@ Create a minikube cluster using Docker (Recommended)
 minikube start --driver=docker
 ```
 
+Driver available:
+- kvm2
+- qemu2
+- qemu
+- vmware
+- none
+- docker
+- podman
+- ssh
+
+**Note**: Minikube is required to run kubectl commands!
+
 Get logs for minikube and save them to a file called logs.txt
 ```
 minikube logs --file logs.txt
+```
+
+Minikube has Kubernetes Dashboard by default. To get more information about your cluster state, run this command:
+```
+minikube dashboard
+```
+
+Halt the cluster
+```
+minikube stop
+```
+
+Delete the cluster
+```
+minikube delete
+```
+
+Delete minikube and all its files
+```
+minikube delete --all --purge
 ```
 
 ## Add your user to docker group
@@ -39,33 +71,6 @@ newgrp docker
 Verify docker commands run without sudo
 ```
 docker run hello-world
-```
-
-Driver available:
-- kvm2
-- qemu2
-- qemu
-- vmware
-- none
-- docker
-- podman
-- ssh
-
-**Note**: Minikube is required to run kubectl commands!
-
-Minikube has Kubernetes Dashboard by default. To get more information about your cluster state, run this command:
-```
-minikube dashboard
-```
-
-Halt the cluster
-```
-minikube stop
-```
-
-Delete the cluster
-```
-minikube delete
 ```
 
 ## Kubctl Commands
@@ -720,12 +725,7 @@ Use curl command with kubectl
 kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 192.168.49.2:30001
 ```
 
-## Delete the minikube Cluster
 
-Delete minikube and all its files
-```
-minikube delete --all --purge
-```
 
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
