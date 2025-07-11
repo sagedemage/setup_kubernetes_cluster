@@ -557,6 +557,18 @@ Identify the current primary node
 kubectl exec -it mongo-sfs-0 -- mongosh --eval "rs.status()"
 ```
 
+Look for the memeber with the stateStr: 'PRIMARY' attribute
+```
+{
+      _id: 0,
+      name: 'mongo-sfs-0.mongo-sfs-service.development.svc.cluster.local:27017',
+      health: 1,
+      state: 1,
+      stateStr: 'PRIMARY',
+      ...
+}
+```
+
 Delete the current primary node pod to simulate a failure
 ```
 kubectl delete pod mongo-sfs-0
@@ -567,15 +579,47 @@ Monitor the status of the replica set. There will be an election of a new primar
 kubectl exec -it mongo-sfs-1 -- mongosh --eval "rs.status()"
 ```
 
+You will notice that one of the secondary nodes has been promoted to primary
+```
+{
+      _id: 1,
+      name: 'mongo-sfs-1.mongo-sfs-service.development.svc.cluster.local:27017',
+      health: 1,
+      state: 1,
+      stateStr: 'PRIMARY',
+      ...
+}
+```
+
 Verify that the deleted pod has been recreated. The deleted pod will rejoin the replica set as a secondary node:
 ```
 kubectl get pods
+```
+
+Confirm that the pod, mongo-sfs-0, is back and running
+```
+NAME                                  READY   STATUS      RESTARTS      AGE
+mongo-sfs-0                           1/1     Running     0             56s
+mongo-sfs-1                           1/1     Running     1 (13m ago)   21h
+mongo-sfs-2                           1/1     Running     1 (13m ago)   21h
 ```
 
 Check the replica set status again. You want to make sure that the new node is now re-elected as the primary because
 it had the highest priority
 ```
 kubectl exec -it mongo-sfs-0 -- mongosh --eval "rs.status()"
+```
+
+You should have something like this
+```
+{
+      _id: 0,
+      name: 'mongo-sfs-0.mongo-sfs-service.development.svc.cluster.local:27017',
+      health: 1,
+      state: 1,
+      stateStr: 'PRIMARY',
+      ...
+}
 ```
 
 ## Add a movie to MongoDB
