@@ -57,3 +57,24 @@ kubectl get ingress
 
 If everything goes well, you should be able to access the website at http://nginx.demo.io/.
 Great job, the public website you are serving is hosted on a Kubernetes cluster!
+
+## Setup TLS Certificate for HTTPS
+
+Generate a private key
+```
+openssl genrsa -out tls_certificate/ca.key 2048
+```
+
+Create a self-signed cerficate that is valid for 365 days
+```
+openssl req -x509 -new -nodes -days 365 -key tls_certificate/ca.key -out tls_certificate/ca.crt -subj "/CN=nginx.demo.io/O=Spirit Technologies/OU=Spirit Cloud"
+```
+
+Create tls secret
+```
+kubectl create secret tls tls-secret --key tls_certificate/ca.key --cert tls_certificate/ca.crt
+```
+
+If everything goes well, you should see a certificate for the website at https://nginx.demo.io/.
+
+![tls_certificate](../screenshots/tls_certificate.png)
