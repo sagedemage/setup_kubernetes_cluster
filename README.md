@@ -4,52 +4,7 @@ Setup a Kubernetes cluster with MongoDB, Mongo Express, Nginx, Prometheus, and G
 
 ## Minikube Commands
 
-Create a minikube cluster:
-```
-minikube start
-```
-
-Create a minikube cluster using Docker (Recommended)
-```
-minikube start --driver=docker
-```
-
-Driver available:
-- kvm2
-- qemu2
-- qemu
-- vmware
-- none
-- docker
-- podman
-- ssh
-
-**Note**: Minikube is required to run kubectl commands!
-
-Get logs for minikube and save them to a file called logs.txt
-```
-minikube logs --file logs.txt
-```
-
-Minikube has Kubernetes Dashboard by default. To get more information about your cluster state, run this command:
-```
-minikube dashboard
-```
-
-Halt the cluster
-```
-minikube stop
-```
-
-Delete the local cluster
-```
-minikube delete
-```
-
-Delete all the local clusters, profiles, and its files
-```
-minikube delete --all --purge
-```
+[Minikube Commands](./docs/minikube_commands.md)
 
 ## Add your user to docker group
 
@@ -75,128 +30,7 @@ docker run hello-world
 
 ## Kubctl Commands
 
-Get the status of the nodes
-```
-kubectl get nodes
-```
-
-List all pods
-```
-kubectl get pod
-```
-
-List all services
-```
-kubectl get services
-```
-
-Get a list of ReplicaSets (ReplicaSet is the replicas of the pods)
-```
-kubectl get replicaset
-```
-
-List all the deployments
-```
-kubectl get deployment
-```
-
-List all the namespaces
-```
-kubectl get namespace
-```
-
-Create a deployment (for example create a nginx deployment)
-```
-kubectl create deployment nginx-depl --image=nginx
-```
-
-Edit a configuration file for a pod
-```
-kubectl edit deployment [pod_name]
-```
-
-Print the logs from a container in a pod
-```
-kubectl logs [pod_name]
-```
-
-Show detailed information about a pod
-```
-kubectl describe pod [pod_name]
-```
-
-Start a bash session in a pod’s container
-```
-kubectl exec -it [pod_name] -- /bin/bash
-```
-
-Delete deployment
-```
-kubectl delete deployment [deployment_name]
-```
-
-Apply configuration to a resource
-```
-kubectl apply -f [file_name]
-```
-
-File: nginx-deployment.yaml
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-spec:
-  selector:
-    matchLabels:
-      app: nginx
-  replicas: 2 # tells deployment to run 2 pods matching the template
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:1.28.0
-        ports:
-        - containerPort: 80
-```
-
-For example apply yaml configuration file to a resource
-```
-kubectl apply -f nginx-deployment.yaml
-```
-
-Get the current context of the cluster
-```
-kubectl config current-context
-```
-
-Switch to the development namespace
-```
-kubectl config use-context dev
-```
-
-Check your current context
-```
-kubectl config current-context
-```
-
-Switch back to the minikube namespace or whatever your default namespace is called
-```
-kubectl config use-context minikube
-```
-
-If you don't know what your default namespace is called, run the command to get all the contexts
-```
-kubectl config get-contexts
-```
-
-Display a specified kubeconfig file
-```
-kubectl config view
-```
+[Kubctl Commands](./docs/kubctl_commands.md)
 
 ## Useful commands
 Create base64 encoded values for credentials
@@ -208,6 +42,11 @@ echo -n 'password' | base64
 Copy the values in the secret file (mongodb-secret.yaml)
 
 ## Setup the cluster
+
+Start a cluster using Docker. It is recommended to use docker as the driver.
+```
+minikube start --driver=docker
+```
 
 Deploy the Nginx deployment
 ```
@@ -415,23 +254,6 @@ kubectl get ingress
 If everything goes well, you should be able to access the website at http://nginx.demo.io/.
 Great job, the public website you are serving is hosted on a Kubernetes cluster!
 
-## Port Forwarding using Kubectl
-
-Port forward the pods, nginx-deployment, to 127.0.0.1:8080. Access the website at http://127.0.0.1:8080 or http://localhost:8080.
-```
-kubectl port-forward nginx-deployment-5fbdcbb6d5-lth75 8080:80
-```
-
-Port forward the deployment, nginx-deployment, to 127.0.0.1:8080.
-```
-kubectl port-forward deployments/nginx-deployment 8080:80
-```
-
-Port forward the service, nginx-service, to 127.0.0.1:8080.
-```
-kubectl port-forward service/nginx-service 8080:80
-```
-
 ## Setup TLS Certificate for HTTPS
 
 Generate a private key
@@ -455,30 +277,7 @@ If everything goes well, you should see a certificate for the website at https:/
 
 ## firealld-cmd commands
 
-List available ports
-```
-sudo firewall-cmd --list-ports
-```
-
-List everything
-```
-firewall-cmd --list-all
-```
-
-Reload firewalld
-```
-sudo firewall-cmd --reload
-```
-
-Allow port 80 permanently
-```
-sudo firewall-cmd --add-port=80/tcp --permanent
-```
-
-Allow http service
-```
-sudo firewall-cmd --add-service=http --permanent
-```
+[firealld-cmd commands](./docs/firealld-cmd_commands.md)
 
 ## Verify the backup of MongoDB via mongodump works
 
@@ -532,6 +331,13 @@ rs.initiate({
     { _id: 2, host: "mongo-sfs-2.mongo-sfs-service.development.svc.cluster.local:27017", priority: 1 }
   ]
 })
+```
+
+To get the hostnames that maps to the pods' IP address for the mongo-sfs-0, mongo-sfs-1, and mongo-sfs-2 pods, use these commands
+```
+kubectl exec -it mongo-sfs-0 -- bash -c "cat /etc/hosts"
+kubectl exec -it mongo-sfs-1 -- bash -c "cat /etc/hosts"
+kubectl exec -it mongo-sfs-2 -- bash -c "cat /etc/hosts"
 ```
 
 Reconfigure the replica set if it had been initialized
@@ -629,103 +435,11 @@ You should have something like this
 
 ## Add a movie to MongoDB
 
-### Via Mongo Express
+[Add a movie to MongoDB](./docs/add_a_movie_to_mongodb.md)
 
-1. Create a database called "imdb"
+## mongosh commands
 
-2. Create a collection called "movies"
-
-3. Add document of a movie in the movies collection
-```
-{
-      "_id": ObjectId(),
-      "name": "Ghost in the Shell",
-    	"year": "1995",
-    	"rating": "7.9",
-    	"director": "Mamoru Oshii",
-    	"writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]
-}
-```
-
-### Via mongosh
-
-Gain access to the mongodb shell
-```
-kubectl exec -it mongodb-deployment-6d9d7c68f6-58clf -- mongosh --username <your_username> --password <your_password>
-```
-
-Switch to the imdb database
-```
-use imdb
-```
-
-Add a document of the movie in the movies collection
-```
-db.movies.insertOne(
-  {
-    "name": "Ghost in the Shell",
-    "year": "1995",
-    "rating": "7.9",
-    "director": "Mamoru Oshii",
-    "writers": ["Shirow MasamuneKazunori", "Kazunori Itô"]
-  }
-)
-```
-
-### mongosh commands
-
-Show all the databases on the server
-```
-show dbs
-```
-
-Retrieve all of the collections in the currently selected database
-```
-show collections
-```
-
-Show a list of all the objects in the movies collection
-```
-db.movies.find()
-```
-
-Delete only one document that matches a condition
-```
-db.movies.deleteOne({_id: ObjectId('686dcf1831ecc5d86abaa8bb')})
-```
-
-Remove a collection called movies1
-```
-db.movies1.drop()
-```
-
-Remove the current database
-```
-db.dropDatabase()
-```
-
-## Properly remove the pv and pvc resources
-
-Make finalizers null
-```
-kubectl patch pv <pv-name> -p '{"metadata":{"finalizers":null}}'
-kubectl patch pvc <pvc-name> -p '{"metadata":{"finalizers":null}}'
-```
-
-Delete all of the pv and pvc resources
-```
-kubectl delete pv --all --force --grace-period=0
-kubectl delete pvc --all --force --grace-period=0
-```
-
-## Useful kubectl utilities
-
-Use curl command with kubectl
-```
-kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 192.168.49.2:30001
-```
-
-
+[mongosh commands](./docs/mongosh_commands.md)
 
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
