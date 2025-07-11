@@ -41,12 +41,12 @@ Halt the cluster
 minikube stop
 ```
 
-Delete the cluster
+Delete the local cluster
 ```
 minikube delete
 ```
 
-Delete minikube and all its files
+Delete all the local clusters, profiles, and its files
 ```
 minikube delete --all --purge
 ```
@@ -742,3 +742,4 @@ kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never
 * [db.collection.drop() (mongosh method) - MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.collection.drop/)
 * [db.dropDatabase() (mongosh method) - MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.dropDatabase/)
 * [deleting minikube cluster so I can create a larger cluster with more CPUs - Stack Overflow](https://stackoverflow.com/questions/72147700/deleting-minikube-cluster-so-i-can-create-a-larger-cluster-with-more-cpus#:~:text=I%20run%20minikube%20with%20--,294)
+* [Basic controls - minikube](https://minikube.sigs.k8s.io/docs/handbook/controls/)
