@@ -167,28 +167,6 @@ Create a pod to access backup files
 kubectl apply -f pods/backup-access.yaml
 ```
 
-## Externally access the services of the pods
-
-Gain access to the Mongo Express admin interface on the web browser
-```
-minikube service mongo-express-service
-```
-
-Gain access to the Nginx website
-```
-minikube service nginx-service
-```
-
-Do all of this in one command
-```
-minikube service mongo-express-service nginx-service
-```
-
-If you are not in the default namespace, specify the namespace for each of these commands like so
-```
-minikube service mongo-express-service -n development
-```
-
 ## Default username and password for Mongo Express
 
 username: admin
