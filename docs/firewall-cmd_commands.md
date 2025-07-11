@@ -2,7 +2,7 @@
 
 List available ports
 ```
-sudo firewall-cmd --list-ports
+firewall-cmd --list-ports
 ```
 
 List everything
