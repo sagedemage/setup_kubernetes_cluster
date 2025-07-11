@@ -550,7 +550,7 @@ To check if the pod is primary, use this command
 rs.status()
 ```
 
-## Performing failover and recovery testing
+## Test failover and recovery processes
 
 Identify the current primary node
 ```
