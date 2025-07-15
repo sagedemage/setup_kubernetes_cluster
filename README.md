@@ -343,6 +343,7 @@ You should have something like this
 [mongosh commands](./docs/mongosh_commands.md)
 
 ## Configure automatic scaling
+
 Install the Metrics Server
 ```
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
@@ -435,6 +436,13 @@ This will show you the current status of the HPA which includes the current numb
 ```
 NAME        REFERENCE               TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
 mongo-sfs   StatefulSet/mongo-sfs   cpu: 19%/50%   3         10        3          101s
+```
+
+## Set default text editor for kubectl edit
+
+Set default text editor for kubectl edit, add this to ~/.bashrc
+```
+export KUBE_EDITOR=vim
 ```
 
 ## Resources
