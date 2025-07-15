@@ -342,6 +342,101 @@ You should have something like this
 
 [mongosh commands](./docs/mongosh_commands.md)
 
+## Configure automatic scaling
+Install the Metrics Server
+```
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+View the status of the metrics server pods
+```
+kubectl get pods -n kube-system
+```
+
+You should see the following
+```
+NAME                               READY   STATUS    RESTARTS        AGE
+...
+metrics-server-867d48dc9c-q7dsh    0/1     Running   0               2s
+...
+```
+
+Containers in the Metrics Server are not running due to TLS certificate issues. To resolve this. execute the command to edit the metrics server deployment
+```
+kubectl edit deployment metrics-server -n kube-system
+```
+
+Add the following commands to the container spec to bypass TLS verification
+```
+...
+spec:
+  containers:
+  - args:
+    ...
+    command:
+    - /metrics-server
+    - --kubelet-insecure-tls
+    - --kubelet-preferred-address-types=InternalIP
+    image: registry.k8s.io/metrics-server/metrics-server:v0.8.0
+...
+```
+
+After making changes, confirm that the containers are running by running the command
+```
+kubectl get pods -n kube-system
+```
+
+You should see the following output
+```
+NAME                               READY   STATUS    RESTARTS        AGE
+...
+metrics-server-6ccbbf7bbc-bvmg6    1/1     Running   0               2m33s
+...
+```
+
+Check the resource usage of the pods in the cluster
+```
+kubectl top pods
+```
+
+Here is something you would see
+```
+NAME                                  CPU(cores)   MEMORY(bytes)
+alpine                                0m           1Mi
+backup-access                         0m           0Mi
+mongo-express-66dc884689-stlzr        1m           125Mi
+mongo-sfs-0                           21m          227Mi
+mongo-sfs-1                           21m          224Mi
+mongo-sfs-2                           21m          233Mi
+mongodb-deployment-6d9d7c68f6-mrptm   14m          496Mi
+nginx-deployment-5fbdcbb6d5-2rrhq     0m           7Mi
+nginx-deployment-5fbdcbb6d5-5qggg     0m           20Mi
+```
+
+Define an HPA resource that specifies how and when to scale the MongoDB staefulset using the command
+```
+kubectl autoscale statefulset mongo-sfs --min=3 --max=10 --cpu-percent=50
+```
+
+The configuration will seth the minimum number of replicas to 3 and allow scaling up to a maximum of
+10 replicas based on CPU utilization
+
+You should see the following output
+```
+horizontalpodautoscaler.autoscaling/mongo-sfs autoscaled
+```
+
+Monitor the status of the HPA using the command
+```
+kubectl get hpa
+```
+
+This will show you the current status of the HPA which includes the current number of replicas and the metrics used for scaling
+```
+NAME        REFERENCE               TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+mongo-sfs   StatefulSet/mongo-sfs   cpu: 19%/50%   3         10        3          101s
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
