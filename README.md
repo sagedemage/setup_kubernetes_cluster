@@ -525,6 +525,20 @@ the port of the prometheus-server-ext service
 http://192.168.49.2:32077
 ```
 
+This is what Prometheus UI looks like
+
+![prometheus ui](./screenshots/prometheus_ui.png)
+
+#### Queries in Prometheus UI
+
+Type the `node_memory_Active_bytes` metric, which gets the memory consumption of each of the Nodes in the cluster. Press the Execute button to run the query. The results will be displayed in a table that shows the query's raw output:
+
+![run prometheus query](./screenshots/run_prometheus_query.png)
+
+Switch to the Graph tab to see the visualization of the metric over time.
+
+![graph visualization prometheus](./screenshots/graph_visualization_prometheus.png)
+
 ### Setup Grafana
 
 Add the grafana helm chart
@@ -652,3 +666,4 @@ helm repo update
 * [Monitoring a Kubernetes Cluster using Prometheus and Grafana - Medium](https://medium.com/@akilblanchard09/monitoring-a-kubernetes-cluster-using-prometheus-and-grafana-8e0f21805ea9)
 * [prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts)
 * [grafana/helm-charts GitHub repository](https://github.com/grafana/helm-charts)
+* [Prometheus Monitoring for Kubernetes Cluster [Tutorial] - spacelift](https://spacelift.io/blog/prometheus-kubernetes)
