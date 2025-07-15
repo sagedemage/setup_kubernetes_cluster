@@ -461,3 +461,4 @@ export KUBE_EDITOR=vim
 * [db.dropDatabase() (mongosh method) - MongoDB](https://www.mongodb.com/docs/manual/reference/method/db.dropDatabase/)
 * [deleting minikube cluster so I can create a larger cluster with more CPUs - Stack Overflow](https://stackoverflow.com/questions/72147700/deleting-minikube-cluster-so-i-can-create-a-larger-cluster-with-more-cpus#:~:text=I%20run%20minikube%20with%20--,294)
 * [Basic controls - minikube](https://minikube.sigs.k8s.io/docs/handbook/controls/)
+* [Kubernetes Metrics Server](https://kubernetes-sigs.github.io/metrics-server/)
