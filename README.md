@@ -520,10 +520,7 @@ minikube ip
 ```
 
 Go to this link to access the Prometheus Server UI. The URL consists of the IP address of the node and
-the port of the prometheus-server-ext service
-```
-http://192.168.49.2:32077
-```
+the port of the prometheus-server-ext service. In my case, the url is http://192.168.49.2:32077.
 
 This is what Prometheus UI looks like
 
@@ -593,10 +590,7 @@ grafana-ext                           NodePort    10.101.188.16    <none>       
 ```
 
 Go to this link to access the Grafana dashboard. The URL consists of the IP address of the node and
-the port of the grafana-ext service
-```
-http://192.168.49.2:30981
-```
+the port of the grafana-ext service. In my case, the url is http://192.168.49.2:30981.
 
 This is what the Grafana home page looks like
 
