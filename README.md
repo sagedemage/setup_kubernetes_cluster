@@ -649,6 +649,6 @@ helm repo update
 * [deleting minikube cluster so I can create a larger cluster with more CPUs - Stack Overflow](https://stackoverflow.com/questions/72147700/deleting-minikube-cluster-so-i-can-create-a-larger-cluster-with-more-cpus#:~:text=I%20run%20minikube%20with%20--,294)
 * [Basic controls - minikube](https://minikube.sigs.k8s.io/docs/handbook/controls/)
 * [Kubernetes Metrics Server](https://kubernetes-sigs.github.io/metrics-server/)
-* [Monitoring a Kubernetes Cluster using Prometheus and Grafana](https://medium.com/@akilblanchard09/monitoring-a-kubernetes-cluster-using-prometheus-and-grafana-8e0f21805ea9)
+* [Monitoring a Kubernetes Cluster using Prometheus and Grafana - Medium](https://medium.com/@akilblanchard09/monitoring-a-kubernetes-cluster-using-prometheus-and-grafana-8e0f21805ea9)
 * [prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts)
 * [grafana/helm-charts GitHub repository](https://github.com/grafana/helm-charts)
