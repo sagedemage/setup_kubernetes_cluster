@@ -47,6 +47,11 @@ Delete all the local clusters, profiles, and its files
 minikube delete --all --purge
 ```
 
+Retrieve the IP address of minikube
+```
+minikube ip
+```
+
 ## Externally access the services of the pods
 
 Gain access to the Mongo Express admin interface on the web browser
