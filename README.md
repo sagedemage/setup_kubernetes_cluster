@@ -445,6 +445,193 @@ Set default text editor for kubectl edit, add this to ~/.bashrc
 export KUBE_EDITOR=vim
 ```
 
+## Setup Monitoring a Cluster with Prometheus and Grafana
+
+### Setup Prometheus
+
+Create a namespace called monitoring
+```
+kubectl create namespace monitoring
+```
+
+Add the prometheus-community helm chart
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+```
+
+Install Prometheus using helm chart
+```
+helm install prometheus prometheus-community/prometheus --namespace monitoring
+```
+
+Run this command to check to see if it installed correctly
+```
+kubectl get pods -n monitoring
+```
+
+You should see something like this
+```
+NAME                                                 READY   STATUS    RESTARTS   AGE
+prometheus-alertmanager-0                            1/1     Running   0          59s
+prometheus-kube-state-metrics-57d654d7bf-g5w9h       1/1     Running   0          59s
+prometheus-prometheus-node-exporter-xwr5b            1/1     Running   0          59s
+prometheus-prometheus-pushgateway-784c485d55-vs9dm   1/1     Running   0          59s
+prometheus-server-6d46c6cf86-wcm7j                   2/2     Running   0          59s
+```
+
+Let's take a look at all the services that have been deployed with Prometheus
+```
+kubectl get service -n monitoring
+```
+
+You should see something like this
+```
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+prometheus-alertmanager               ClusterIP   10.101.105.214   <none>        9093/TCP   2m38s
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP   2m38s
+prometheus-kube-state-metrics         ClusterIP   10.99.127.107    <none>        8080/TCP   2m38s
+prometheus-prometheus-node-exporter   ClusterIP   10.97.208.224    <none>        9100/TCP   2m38s
+prometheus-prometheus-pushgateway     ClusterIP   10.108.106.54    <none>        9091/TCP   2m38s
+prometheus-server                     ClusterIP   10.96.169.106    <none>        80/TCP     2m38s
+```
+
+You want expose the prometheus server in order to see what the api looks like and look into queries
+that can be created on it. To do this, run this command to convert the prometheus-server service from
+ClusterIP to NodePort service.
+```
+kubectl expose service prometheus-server --namespace monitoring --type=NodePort --target-port=9090 --name=prometheus-server-ext
+```
+
+Run the command to see a new entry called prometheus-server-ext that is of type NodePort.
+```
+kubectl get service -n monitoring
+```
+
+You should see something like this:
+```
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+...
+prometheus-server-ext                 NodePort    10.103.147.41    <none>        80:32077/TCP   79s
+```
+
+Run the command to get the IP address of the node
+```
+minikube ip
+```
+
+Go to this link to access the Prometheus Server UI. The URL consists of the IP address of the node and
+the port of the prometheus-server-ext service
+```
+http://192.168.49.2:32077
+```
+
+### Setup Grafana
+
+Add the grafana helm chart
+```
+helm repo add grafana https://grafana.github.io/helm-charts
+```
+
+Install Grafana using helm chart
+```
+helm install grafana grafana/grafana --namespace monitoring
+```
+
+Run the command to get admin user password
+```
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+
+Run the command get the Grafana URL to visit
+```
+export POD_NAME=$(kubectl get pods --namespace monitoring -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+kubectl --namespace monitoring port-forward $POD_NAME 3000
+```
+
+Run the command to see the Grafana service
+```
+kubectl get service -n monitoring
+```
+
+You should see something like this
+```
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+grafana                               ClusterIP   10.107.231.119   <none>        80/TCP         3m44s
+...
+```
+
+Let's create a NodePort Grafana service
+```
+kubectl expose service grafana --namespace monitoring --type=NodePort --target-port=3000 --name=grafana-ext
+```
+
+Run the command to see a new entry called grafana-ext
+```
+kubectl get service -n monitoring
+```
+
+You should see something like this
+```
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+...
+grafana-ext                           NodePort    10.101.188.16    <none>        80:30981/TCP   7s
+...
+```
+
+Go to this link to access the Grafana dashboard. The URL consists of the IP address of the node and
+the port of the grafana-ext service
+```
+http://192.168.49.2:30981
+```
+
+This is what the Grafana home page looks like
+
+![grafana home page](./screenshots/grafana_home_page.png)
+
+#### Configure monitoring applications
+
+You got to create Prometheus as a data source for Grafana. This allows Grafana to retrieve metrics from Prometheus to create
+the graphs that will be used to visualize cluster metrics.
+
+Create the first dashboard tile. Then from the list of options presented, select Prometheus.
+
+Add the URL for the Prometheus server URL field
+```
+http://192.168.49.2:32077
+```
+
+![prometheus server url field](./screenshots/prometheus_server_url_field.png)
+
+Save and test to see it works. This will save the configuration and test if the data source is working.
+
+![save and test grafana configuration](./screenshots/save_and_test_grafana_configuration.png)
+
+Let's create a dashboard to visualize the data, go to the menu and select "Dashboards".
+
+To do this, input the ID of the dashboard into the text field. The ID being used is 3662. Click the Load button.
+
+![import dashboard grafana](./screenshots/import_dashboard_grafana.png)
+
+Set the name for the dashboard to Prometheus-v1 and set the Prometheus option for the Data Source.
+
+![set name of dashboard grafana](./screenshots/set_name_of_dashboard_grafana.png)
+
+Select import and you will see the dashboard that has been generated.
+
+![generated dashboard grafana](./screenshots/generated_dashboard_grafana.png)
+
+This retrieves information from the Minikube cluster. The dashboard has a predefined template that runs queries
+(PromQL quereis). These queries run against the cluster and provides these metrics.
+
+## helm commands
+
+Update information of the available charts locally from chart repositories
+```
+helm repo update
+```
+
+### Configure monitoring applications
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
@@ -462,3 +649,6 @@ export KUBE_EDITOR=vim
 * [deleting minikube cluster so I can create a larger cluster with more CPUs - Stack Overflow](https://stackoverflow.com/questions/72147700/deleting-minikube-cluster-so-i-can-create-a-larger-cluster-with-more-cpus#:~:text=I%20run%20minikube%20with%20--,294)
 * [Basic controls - minikube](https://minikube.sigs.k8s.io/docs/handbook/controls/)
 * [Kubernetes Metrics Server](https://kubernetes-sigs.github.io/metrics-server/)
+* [Monitoring a Kubernetes Cluster using Prometheus and Grafana](https://medium.com/@akilblanchard09/monitoring-a-kubernetes-cluster-using-prometheus-and-grafana-8e0f21805ea9)
+* [prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts)
+* [grafana/helm-charts GitHub repository](https://github.com/grafana/helm-charts)
