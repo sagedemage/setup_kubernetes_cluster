@@ -495,11 +495,9 @@ Port forward to 9090 to get the Prometheus UI
 kubectl port-forward prometheus-server-6d46c6cf86-9tvsx 9090
 ```
 
-You want expose the prometheus server in order to see what the api looks like and look into queries
-that can be created on it. To do this, run this command to convert the prometheus-server service from
-ClusterIP to NodePort service.
+Apply the config for the prometheus-server-ext-service service
 ```
-kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
+kubectl apply -f services/prometheus-server-ext-service.yaml
 ```
 
 Run the command to see a new entry called prometheus-server-ext that is of type NodePort.
@@ -511,7 +509,7 @@ You should see something like this:
 ```
 NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 ...
-prometheus-server-ext                 NodePort    10.103.147.41    <none>        80:32077/TCP   79s
+prometheus-server-ext-service         NodePort       10.98.119.17     <none>           80:30517/TCP                 7s
 ```
 
 Run the command to get the IP address of the node
@@ -604,7 +602,7 @@ Create the first dashboard tile. Then from the list of options presented, select
 
 Add the URL for the Prometheus server URL field
 ```
-http://192.168.49.2:32077
+http://192.168.49.2:30517
 ```
 
 ![prometheus server url field](./screenshots/prometheus_server_url_field.png)
