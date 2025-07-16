@@ -449,11 +449,6 @@ export KUBE_EDITOR=vim
 
 ### Setup Prometheus
 
-Create a namespace called monitoring
-```
-kubectl create namespace monitoring
-```
-
 Add the prometheus-community helm chart
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -461,12 +456,12 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 
 Install Prometheus using helm chart
 ```
-helm install prometheus prometheus-community/prometheus --namespace monitoring
+helm install prometheus prometheus-community/prometheus
 ```
 
 Run this command to check to see if it installed correctly
 ```
-kubectl get pods -n monitoring
+kubectl get pods
 ```
 
 You should see something like this
@@ -481,7 +476,7 @@ prometheus-server-6d46c6cf86-wcm7j                   2/2     Running   0        
 
 Let's take a look at all the services that have been deployed with Prometheus
 ```
-kubectl get service -n monitoring
+kubectl get service
 ```
 
 You should see something like this
@@ -495,16 +490,21 @@ prometheus-prometheus-pushgateway     ClusterIP   10.108.106.54    <none>       
 prometheus-server                     ClusterIP   10.96.169.106    <none>        80/TCP     2m38s
 ```
 
+Port forward to 9090 to get the Prometheus UI
+```
+kubectl port-forward prometheus-server-6d46c6cf86-9tvsx 9090
+```
+
 You want expose the prometheus server in order to see what the api looks like and look into queries
 that can be created on it. To do this, run this command to convert the prometheus-server service from
 ClusterIP to NodePort service.
 ```
-kubectl expose service prometheus-server --namespace monitoring --type=NodePort --target-port=9090 --name=prometheus-server-ext
+kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
 ```
 
 Run the command to see a new entry called prometheus-server-ext that is of type NodePort.
 ```
-kubectl get service -n monitoring
+kubectl get service
 ```
 
 You should see something like this:
@@ -545,23 +545,22 @@ helm repo add grafana https://grafana.github.io/helm-charts
 
 Install Grafana using helm chart
 ```
-helm install grafana grafana/grafana --namespace monitoring
+helm install grafana grafana/grafana
 ```
 
 Run the command to get admin user password
 ```
-kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+kubectl get secret --namespace development grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
 Run the command get the Grafana URL to visit
 ```
-export POD_NAME=$(kubectl get pods --namespace monitoring -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
-kubectl --namespace monitoring port-forward $POD_NAME 3000
+kubectl port-forward deployment/grafana 3000
 ```
 
 Run the command to see the Grafana service
 ```
-kubectl get service -n monitoring
+kubectl get service
 ```
 
 You should see something like this
@@ -573,12 +572,12 @@ grafana                               ClusterIP   10.107.231.119   <none>       
 
 Let's create a NodePort Grafana service
 ```
-kubectl expose service grafana --namespace monitoring --type=NodePort --target-port=3000 --name=grafana-ext
+kubectl expose service grafana --type=NodePort --target-port=3000 --name=grafana-ext
 ```
 
 Run the command to see a new entry called grafana-ext
 ```
-kubectl get service -n monitoring
+kubectl get service
 ```
 
 You should see something like this
@@ -642,17 +641,17 @@ helm repo update
 
 Install the Prometheus Mongodb Exporter
 ```
-helm install prometheus-mongodb-exporter prometheus-community/prometheus-mongodb-exporter --namespace monitoring -f mongodb-exporter/values.yaml
+helm install prometheus-mongodb-exporter prometheus-community/prometheus-mongodb-exporter -f mongodb-exporter/values.yaml
 ```
 
 Uninstall the Prometheus Mongodb Exporter if something is wrong
 ```
-helm uninstall prometheus-mongodb-exporter -n monitoring
+helm uninstall prometheus-mongodb-exporter
 ```
 
 Make sure the prometheus-mongodb-exporter pod is available
 ```
-kubectl get pod -n monitoring
+kubectl get pod
 ```
 
 You should see something like this
@@ -665,7 +664,7 @@ prometheus-mongodb-exporter-5cf876c6d9-5djmh             1/1     Running   0    
 
 Make sure the prometheus-mongodb-exporter service is available
 ```
-kubectl get service -n monitoring
+kubectl get service
 ```
 
 You should see something like this
@@ -678,7 +677,7 @@ prometheus-mongodb-exporter                    ClusterIP   10.108.133.254   <non
 
 Make sure that the prometheus-mongodb-exporter service monitor is available
 ```
-kubectl get servicemonitor -n monitoring
+kubectl get servicemonitor
 ```
 
 You should see something like this
@@ -692,7 +691,7 @@ Verify the application is working by running these commands
 
 Port forward the prometheus-mongodb-exporter service
 ```
-kubectl port-forward service/prometheus-mongodb-exporter 9216 -n monitoring
+kubectl port-forward service/prometheus-mongodb-exporter 9216
 ```
 
 Curl the metrics of the Prometheus Mongodb Exporter
@@ -702,7 +701,7 @@ curl http://127.0.0.1:9216/metrics
 
 Get service monitors
 ```
-kubectl get servicemonitor -n monitoring
+kubectl get servicemonitor
 ```
 
 Go to Import dashboard page.
