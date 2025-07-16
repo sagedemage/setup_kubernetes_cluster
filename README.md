@@ -638,7 +638,78 @@ Update information of the available charts locally from chart repositories
 helm repo update
 ```
 
-### Configure monitoring applications
+## MongoDB Exporter for Prometheus
+
+Install the Prometheus Mongodb Exporter
+```
+helm install prometheus-mongodb-exporter prometheus-community/prometheus-mongodb-exporter --namespace monitoring -f mongodb-exporter/values.yaml
+```
+
+Uninstall the Prometheus Mongodb Exporter if something is wrong
+```
+helm uninstall prometheus-mongodb-exporter -n monitoring
+```
+
+Make sure the prometheus-mongodb-exporter pod is available
+```
+kubectl get pod -n monitoring
+```
+
+You should see something like this
+```
+NAME                                                     READY   STATUS    RESTARTS       AGE
+...
+prometheus-mongodb-exporter-5cf876c6d9-5djmh             1/1     Running   0              94s
+...
+```
+
+Make sure the prometheus-mongodb-exporter service is available
+```
+kubectl get service -n monitoring
+```
+
+You should see something like this
+```
+NAME                                           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+...
+prometheus-mongodb-exporter                    ClusterIP   10.108.133.254   <none>        9216/TCP                     3m27s
+...
+```
+
+Make sure that the prometheus-mongodb-exporter service monitor is available
+```
+kubectl get servicemonitor -n monitoring
+```
+
+You should see something like this
+```
+NAME                                                 AGE
+prometheus-mongodb-exporter                          2s
+...
+```
+
+Verify the application is working by running these commands
+
+Port forward the prometheus-mongodb-exporter service
+```
+kubectl port-forward service/prometheus-mongodb-exporter 9216 -n monitoring
+```
+
+Curl the metrics of the Prometheus Mongodb Exporter
+```
+curl http://127.0.0.1:9216/metrics
+```
+
+Get service monitors
+```
+kubectl get servicemonitor -n monitoring
+```
+
+Go to Import dashboard page.
+
+Enter the ID 2583 and load it.
+
+Select Prometheus for the data source and import it.
 
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
