@@ -630,10 +630,7 @@ This retrieves information from the Minikube cluster. The dashboard has a predef
 
 ## helm commands
 
-Update information of the available charts locally from chart repositories
-```
-helm repo update
-```
+[helm commands](./docs/helm_commands.md)
 
 ## MongoDB Exporter for Prometheus
 
