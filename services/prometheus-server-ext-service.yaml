@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-server-ext-service
+spec:
+  selector:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/name: prometheus
+  type: NodePort
+  ports:
+    - nodePort: 30517
+      port: 80
+      protocol: TCP
+      targetPort: 9090
