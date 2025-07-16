@@ -1,0 +1,31 @@
+mongodb:
+  uri: "mongodb://mongodb-service.development.svc.cluster.local:27017"
+
+serviceMonitor:
+  enabled: true
+  interval: 30s
+  scrapeTimeout: 10s
+  multiTarget:
+    username:
+      existingSecret:
+        name: mongodb-secret
+        key: mongo-root-username
+    password:
+      existingSecret:
+        name: mongodb-secret
+        key: mongo-root-password
+  additionalLabels:
+    release: prometheus
+
+extraArgs:
+  - --collector.diagnosticdata
+  - --collector.replicasetstatus
+  - --collector.dbstats
+  - --collector.topmetrics
+  - --collector.indexstats
+  - --collector.collstats
+  - --collector.dbstatsfreestorage
+  - --collector.currentopmetrics
+  - --collector.fcv
+  - --log.level=debug
+
