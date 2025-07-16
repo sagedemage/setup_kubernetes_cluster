@@ -568,9 +568,9 @@ grafana                               ClusterIP   10.107.231.119   <none>       
 ...
 ```
 
-Let's create a NodePort Grafana service
+Apply the grafana-ext-service service
 ```
-kubectl expose service grafana --type=NodePort --target-port=3000 --name=grafana-ext
+kubectl apply -f services/grafana-ext-service.yaml
 ```
 
 Run the command to see a new entry called grafana-ext
