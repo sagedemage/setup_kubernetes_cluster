@@ -19,7 +19,7 @@ serviceMonitor:
   interval: 30s
   scrapeTimeout: 10s
   additionalLabels:
-    release: prometheus
+    release: kube-prometheus-stack
 
 extraArgs:
   - --collector.diagnosticdata
