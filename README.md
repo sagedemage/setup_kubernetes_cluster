@@ -703,11 +703,6 @@ Curl the metrics of the Prometheus MongoDB Exporter
 curl http://127.0.0.1:9216/metrics
 ```
 
-Get service monitors
-```
-kubectl get servicemonitor
-```
-
 Go to Import dashboard page.
 
 Enter the ID 2583 and load it.
