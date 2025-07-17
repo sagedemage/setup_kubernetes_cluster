@@ -721,6 +721,8 @@ prometheus-mongodb-exporter-ext-service          NodePort       10.110.114.113  
 ...
 ```
 
+### Setup the MongoDB Dashboard in Grafana
+
 Go to Import dashboard page.
 
 Enter the ID 7353 and load it.
