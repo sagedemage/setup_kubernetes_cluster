@@ -723,7 +723,7 @@ prometheus-mongodb-exporter-ext-service          NodePort       10.110.114.113  
 
 Go to Import dashboard page.
 
-Enter the ID 2583 or 7353 and load it.
+Enter the ID 7353 and load it.
 
 Set the name for the dashboard to MongoDB-v1 and set the Prometheus option for the Data Source.
 
@@ -752,3 +752,4 @@ Select import and you will see the dashboard that has been generated.
 * [Prometheus Monitoring for Kubernetes Cluster [Tutorial] - spacelift](https://spacelift.io/blog/prometheus-kubernetes)
 * [prometheus-community/prometheus-mongodb-exporter - Artifact Hub](https://artifacthub.io/packages/helm/prometheus-community/prometheus-mongodb-exporter)
 * [kube-prometheus-stack - prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)
+* [How To Monitor MongoDB with Grafana and Prometheus on Ubuntu 20.04 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-monitor-mongodb-with-grafana-and-prometheus-on-ubuntu-20-04)
