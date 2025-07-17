@@ -518,7 +518,7 @@ minikube ip
 ```
 
 Go to this link to access the Prometheus Server UI. The URL consists of the IP address of the node and
-the port of the prometheus-server-ext service. In my case, the url is http://192.168.49.2:32077.
+the port of the prometheus-server-ext service. In my case, the url is http://192.168.49.2:30517.
 
 This is what Prometheus UI looks like
 
@@ -573,21 +573,21 @@ Apply the grafana-ext-service service
 kubectl apply -f services/grafana-ext-service.yaml
 ```
 
-Run the command to see a new entry called grafana-ext
+Run the command to see a new entry called grafana-ext-service
 ```
 kubectl get service
 ```
 
 You should see something like this
 ```
-NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+NAME                                  TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                      AGE
 ...
-grafana-ext                           NodePort    10.101.188.16    <none>        80:30981/TCP   7s
+grafana-ext-service                   NodePort       10.108.112.252   <none>           80:31825/TCP                 3h27m
 ...
 ```
 
 Go to this link to access the Grafana dashboard. The URL consists of the IP address of the node and
-the port of the grafana-ext service. In my case, the url is http://192.168.49.2:30981.
+the port of the grafana-ext service. In my case, the url is http://192.168.49.2:31825.
 
 This is what the Grafana home page looks like
 
