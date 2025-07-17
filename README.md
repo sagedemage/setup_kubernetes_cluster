@@ -454,9 +454,9 @@ Add the prometheus-community helm chart
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 ```
 
-Install Prometheus using helm chart
+Install kube-prometheus-stack using helm chart
 ```
-helm install prometheus prometheus-community/prometheus
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack
 ```
 
 Run this command to check to see if it installed correctly
@@ -466,12 +466,16 @@ kubectl get pods
 
 You should see something like this
 ```
-NAME                                                 READY   STATUS    RESTARTS   AGE
-prometheus-alertmanager-0                            1/1     Running   0          59s
-prometheus-kube-state-metrics-57d654d7bf-g5w9h       1/1     Running   0          59s
-prometheus-prometheus-node-exporter-xwr5b            1/1     Running   0          59s
-prometheus-prometheus-pushgateway-784c485d55-vs9dm   1/1     Running   0          59s
-prometheus-server-6d46c6cf86-wcm7j                   2/2     Running   0          59s
+NAME                                                        READY   STATUS      RESTARTS        AGE
+alertmanager-kube-prometheus-stack-alertmanager-0           2/2     Running     0               2m1s
+...
+kube-prometheus-stack-grafana-748cbc5458-rvtht              3/3     Running     0               2m3s
+kube-prometheus-stack-kube-state-metrics-684f8c7558-c5lpb   1/1     Running     0               2m3s
+kube-prometheus-stack-operator-5cfbc8b784-hn6vg             1/1     Running     0               2m3s
+kube-prometheus-stack-prometheus-node-exporter-cvsmx        1/1     Running     0               2m3s
+...
+prometheus-kube-prometheus-stack-prometheus-0               2/2     Running     0               2m
+...
 ```
 
 Let's take a look at all the services that have been deployed with Prometheus
@@ -481,18 +485,22 @@ kubectl get service
 
 You should see something like this
 ```
-NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-prometheus-alertmanager               ClusterIP   10.101.105.214   <none>        9093/TCP   2m38s
-prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP   2m38s
-prometheus-kube-state-metrics         ClusterIP   10.99.127.107    <none>        8080/TCP   2m38s
-prometheus-prometheus-node-exporter   ClusterIP   10.97.208.224    <none>        9100/TCP   2m38s
-prometheus-prometheus-pushgateway     ClusterIP   10.108.106.54    <none>        9091/TCP   2m38s
-prometheus-server                     ClusterIP   10.96.169.106    <none>        80/TCP     2m38s
+NAME                                             TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                      AGE
+alertmanager-operated                            ClusterIP      None             <none>           9093/TCP,9094/TCP,9094/UDP   3m42s
+...
+kube-prometheus-stack-alertmanager               ClusterIP      10.105.15.245    <none>           9093/TCP,8080/TCP            3m44s
+kube-prometheus-stack-grafana                    ClusterIP      10.99.230.183    <none>           80/TCP                       3m44s
+kube-prometheus-stack-kube-state-metrics         ClusterIP      10.104.129.206   <none>           8080/TCP                     3m44s
+kube-prometheus-stack-operator                   ClusterIP      10.111.227.149   <none>           443/TCP                      3m44s
+kube-prometheus-stack-prometheus                 ClusterIP      10.101.147.184   <none>           9090/TCP,8080/TCP            3m44s
+kube-prometheus-stack-prometheus-node-exporter   ClusterIP      10.96.23.75      <none>           9100/TCP                     3m44s
+...
+prometheus-operated                              ClusterIP      None             <none>           9090/TCP                     3m41s
 ```
 
 Port forward to 9090 to get the Prometheus UI
 ```
-kubectl port-forward prometheus-server-6d46c6cf86-9tvsx 9090
+kubectl port-forward prometheus-kube-prometheus-stack-prometheus-0 9090
 ```
 
 Apply the config for the prometheus-server-ext-service service
@@ -500,7 +508,7 @@ Apply the config for the prometheus-server-ext-service service
 kubectl apply -f services/prometheus-server-ext-service.yaml
 ```
 
-Run the command to see a new entry called prometheus-server-ext that is of type NodePort.
+Run the command to see a new entry called prometheus-server-ext-service.
 ```
 kubectl get service
 ```
@@ -541,19 +549,14 @@ Add the grafana helm chart
 helm repo add grafana https://grafana.github.io/helm-charts
 ```
 
-Install Grafana using helm chart
-```
-helm install grafana grafana/grafana
-```
-
 Run the command to get admin user password
 ```
-kubectl get secret --namespace development grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+kubectl --namespace development get secrets kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
 ```
 
 Run the command get the Grafana URL to visit
 ```
-kubectl port-forward deployment/grafana 3000
+kubectl port-forward deployment/kube-prometheus-stack-grafana 3000
 ```
 
 Run the command to see the Grafana service
@@ -563,8 +566,9 @@ kubectl get service
 
 You should see something like this
 ```
-NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-grafana                               ClusterIP   10.107.231.119   <none>        80/TCP         3m44s
+NAME                                             TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                      AGE
+...
+kube-prometheus-stack-grafana                    ClusterIP      10.99.230.183    <none>           80/TCP                       33m
 ...
 ```
 
@@ -732,3 +736,4 @@ Select Prometheus for the data source and import it.
 * [grafana/helm-charts GitHub repository](https://github.com/grafana/helm-charts)
 * [Prometheus Monitoring for Kubernetes Cluster [Tutorial] - spacelift](https://spacelift.io/blog/prometheus-kubernetes)
 * [prometheus-community/prometheus-mongodb-exporter - Artifact Hub](https://artifacthub.io/packages/helm/prometheus-community/prometheus-mongodb-exporter)
+* [kube-prometheus-stack - prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)
