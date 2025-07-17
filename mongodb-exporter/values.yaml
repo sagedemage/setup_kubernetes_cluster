@@ -9,11 +9,6 @@ existingSecret:
   name: mongodb-secret
   key: mongodb-uri
 
-service:
-  port: 9216
-  type: NodePort
-  portName: metrics
-
 serviceMonitor:
   enabled: true
   interval: 30s
