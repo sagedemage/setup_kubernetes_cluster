@@ -634,6 +634,11 @@ This retrieves information from the Minikube cluster. The dashboard has a predef
 
 ## MongoDB Exporter for Prometheus
 
+See all configurable options, run the command
+```
+helm show values prometheus-community/prometheus-mongodb-exporter
+```
+
 Install the Prometheus Mongodb Exporter
 ```
 helm install prometheus-mongodb-exporter prometheus-community/prometheus-mongodb-exporter -f mongodb-exporter/values.yaml
@@ -726,3 +731,4 @@ Select Prometheus for the data source and import it.
 * [prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts)
 * [grafana/helm-charts GitHub repository](https://github.com/grafana/helm-charts)
 * [Prometheus Monitoring for Kubernetes Cluster [Tutorial] - spacelift](https://spacelift.io/blog/prometheus-kubernetes)
+* [prometheus-community/prometheus-mongodb-exporter - Artifact Hub](https://artifacthub.io/packages/helm/prometheus-community/prometheus-mongodb-exporter)
