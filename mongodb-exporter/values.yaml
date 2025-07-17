@@ -10,12 +10,9 @@ existingSecret:
   key: mongodb-uri
 
 service:
+  port: 9216
   type: NodePort
   portName: metrics
-  nodePort: 30657
-  port: 9216
-  protocol: TCP
-  targetPort: metrics
 
 serviceMonitor:
   enabled: true
