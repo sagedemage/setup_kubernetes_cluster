@@ -636,7 +636,7 @@ This retrieves information from the Minikube cluster. The dashboard has a predef
 
 [helm commands](./docs/helm_commands.md)
 
-## MongoDB Exporter for Prometheus
+## Setup the Prometheus MongoDB Exporter
 
 See all configurable options, run the command
 ```
@@ -673,9 +673,9 @@ kubectl get service
 
 You should see something like this
 ```
-NAME                                           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+NAME                                             TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                      AGE
 ...
-prometheus-mongodb-exporter                    ClusterIP   10.108.133.254   <none>        9216/TCP                     3m27s
+prometheus-mongodb-exporter                      ClusterIP      10.96.130.12     <none>           9216/TCP                     15m
 ...
 ```
 
@@ -703,9 +703,27 @@ Curl the metrics of the Prometheus MongoDB Exporter
 curl http://127.0.0.1:9216/metrics
 ```
 
+To access the Prometheus MongoDB Exporter, apply the prometheus-mongodb-exporter-ext-service service config
+```
+kubectl apply -f services/prometheus-mongodb-exporter-ext-service.yaml
+```
+
+Check for the prometheus-mongodb-exporter-ext-service service
+```
+kubectl get service
+```
+
+You should see something like this
+```
+NAME                                             TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                      AGE
+...
+prometheus-mongodb-exporter-ext-service          NodePort       10.110.114.113   <none>           80:30560/TCP                 8m33s
+...
+```
+
 Go to Import dashboard page.
 
-Enter the ID 2583 and load it.
+Enter the ID 2583 or 7353 and load it.
 
 Set the name for the dashboard to MongoDB-v1 and set the Prometheus option for the Data Source.
 
