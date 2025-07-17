@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-mongodb-exporter-ext-service
+spec:
+  selector:
+    app.kubernetes.io/instance: prometheus-mongodb-exporter
+    app.kubernetes.io/name: prometheus-mongodb-exporter
+  type: NodePort
+  ports:
+    - nodePort: 30560
+      port: 80
+      protocol: TCP
+      targetPort: 9216
