@@ -643,12 +643,12 @@ See all configurable options, run the command
 helm show values prometheus-community/prometheus-mongodb-exporter
 ```
 
-Install the Prometheus Mongodb Exporter
+Install the Prometheus MongoDB Exporter
 ```
 helm install prometheus-mongodb-exporter prometheus-community/prometheus-mongodb-exporter -f mongodb-exporter/values.yaml
 ```
 
-Uninstall the Prometheus Mongodb Exporter if something is wrong
+Uninstall the Prometheus MongoDB Exporter if something is wrong
 ```
 helm uninstall prometheus-mongodb-exporter
 ```
@@ -698,7 +698,7 @@ Port forward the prometheus-mongodb-exporter service
 kubectl port-forward service/prometheus-mongodb-exporter 9216
 ```
 
-Curl the metrics of the Prometheus Mongodb Exporter
+Curl the metrics of the Prometheus MongoDB Exporter
 ```
 curl http://127.0.0.1:9216/metrics
 ```
@@ -712,7 +712,9 @@ Go to Import dashboard page.
 
 Enter the ID 2583 and load it.
 
-Select Prometheus for the data source and import it.
+Set the name for the dashboard to MongoDB-v1 and set the Prometheus option for the Data Source.
+
+Select import and you will see the dashboard that has been generated.
 
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
