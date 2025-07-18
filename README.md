@@ -731,16 +731,6 @@ Curl the metrics of the Prometheus MongoDB Exporter pod
 kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 10.244.3.88:9216/metrics
 ```
 
-### Setup the MongoDB Dashboard in Grafana
-
-Go to Import dashboard page.
-
-Enter the ID 7353 and load it.
-
-Set the name for the dashboard to MongoDB-v1 and set the Prometheus option for the Data Source.
-
-Select import and you will see the dashboard that has been generated.
-
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
