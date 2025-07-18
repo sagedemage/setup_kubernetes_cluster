@@ -721,6 +721,21 @@ prometheus-mongodb-exporter-ext-service          NodePort       10.110.114.113  
 ...
 ```
 
+Get the IP address of the Prometheus MongoDB Exporter pod
+```
+kubectl get pod -o wide | grep "prometheus-mongodb-exporter"
+```
+
+You should see something like this
+```
+prometheus-mongodb-exporter-776dcb4c8-kgp54                 1/1     Running     0                26m     10.244.3.88    minikube   <none>           <none>
+```
+
+Curl the metrics of the Prometheus MongoDB Exporter pod
+```
+kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 10.244.3.88:9216/metrics
+```
+
 ### Setup the MongoDB Dashboard in Grafana
 
 Go to Import dashboard page.
