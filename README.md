@@ -544,11 +544,6 @@ Switch to the Graph tab to see the visualization of the metric over time.
 
 ### Setup Grafana
 
-Add the grafana helm chart
-```
-helm repo add grafana https://grafana.github.io/helm-charts
-```
-
 Run the command to get admin user password
 ```
 kubectl --namespace development get secrets kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
