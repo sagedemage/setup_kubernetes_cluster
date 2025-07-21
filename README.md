@@ -734,9 +734,48 @@ kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never
 ## Security
 ### Resource Quotas
 
+Create low, medium, and high priority classes
+```
+kubectl apply -f priorityclasses/
+```
+
 Create quota object which matches it with pods at specific priorities
 ```
-kubectl create -f quota.yaml
+kubectl apply -f quota.yaml
+```
+
+Very the used stats for `pods-low` and `pods-medium` priority quotas has changed but not `pods-high` quota
+```
+kubectl describe quota
+```
+
+You should see something like this
+```
+Name:       pods-high
+Namespace:  development
+Resource    Used  Hard
+--------    ----  ----
+cpu         0     2
+memory      0     2Gi
+pods        0     10
+
+
+Name:       pods-low
+Namespace:  development
+Resource    Used   Hard
+--------    ----   ----
+cpu         500m   500m
+memory      500Mi  500Mi
+pods        1      10
+
+
+Name:       pods-medium
+Namespace:  development
+Resource    Used  Hard
+--------    ----  ----
+cpu         1     1
+memory      1Gi   1Gi
+pods        1     10
 ```
 
 ## Resources
@@ -744,6 +783,7 @@ kubectl create -f quota.yaml
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
   * [Run a Stateless Application Using a Deployment](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
   * [Namespaces Walkthrough](https://kubernetes.io/docs/tutorials/cluster-management/namespaces-walkthrough/)
+  * [Resource Quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/)
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
