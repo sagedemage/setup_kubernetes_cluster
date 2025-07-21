@@ -10,7 +10,15 @@ spec:
       volumeMounts:
         - name: backup-storage
           mountPath: /backup
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "1"
+        limits:
+          memory: "1Gi"
+          cpu: "1"
   volumes:
     - name: backup-storage
       persistentVolumeClaim:
         claimName: backup-pvc
+  priorityClassName: medium
