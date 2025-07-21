@@ -45,7 +45,7 @@ Copy the values in the secret file (mongodb-secret.yaml)
 
 Start a cluster using Docker. It is recommended to use docker as the driver.
 ```
-minikube start --driver=docker
+minikube start --driver=docker --cpus=2 --memory=2g --disk-size=20g
 ```
 
 Deploy the Nginx deployment

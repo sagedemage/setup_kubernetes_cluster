@@ -2,7 +2,7 @@
 
 case "$1" in
     "start-minikube")
-        minikube start --driver=docker
+        minikube start --driver=docker --cpus=2 --memory=2g --disk-size=20g
         ;;
     "apply-all")
         kubectl apply -f deployments/
