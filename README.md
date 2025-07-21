@@ -45,7 +45,7 @@ Copy the values in the secret file (mongodb-secret.yaml)
 
 Start a cluster using Docker. It is recommended to use docker as the driver.
 ```
-minikube start --driver=docker --cpus=2 --memory=2g --disk-size=20g
+minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g
 ```
 
 Deploy the Nginx deployment
@@ -729,6 +729,14 @@ prometheus-mongodb-exporter-776dcb4c8-kgp54                 1/1     Running     
 Curl the metrics of the Prometheus MongoDB Exporter pod
 ```
 kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never -- 10.244.3.88:9216/metrics
+```
+
+## Security
+### Resource Quotas
+
+Create quota object which matches it with pods at specific priorities
+```
+kubectl create -f quota.yaml
 ```
 
 ## Resources
