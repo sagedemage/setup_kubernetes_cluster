@@ -45,7 +45,7 @@ Copy the values in the secret file (mongodb-secret.yaml)
 
 Start a cluster using Docker. It is recommended to use docker as the driver.
 ```
-minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g
+minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
 ```
 
 Deploy the Nginx deployment
@@ -816,12 +816,74 @@ Delete the MySQL Pod
 kubectl delete pod default-mem-demo --namespace=development
 ```
 
+### Declare Network Policy
+#### Test the connection of the mongodb-deployment pod by accessing it from another Pod
+
+Run an nmap command to check if the mongodb-deployment pod is available and the port 27017 is open
+```
+kubectl run --image=appsoa/docker-alpine-nmap --rm -it nm -- -Pn -p 27017 10.0.0.100
+```
+
+Should get something like this
+```
+Nmap scan report for 10.0.0.100
+Host is up (0.000082s latency).
+PORT      STATE SERVICE
+27017/tcp open  mongod
+
+Nmap done: 1 IP address (1 host up) scanned in 0.29 seconds
+```
+
+#### Limit access to the mongodb-deployment pod
+
+Create the access-mongodb network policy to limit access to the mongodb-service service
+```
+kubectl apply -f networkpolicies/mongodb-policy.yaml
+```
+
+Run an nmap command to check if the mongodb-deployment pod is available and the port 27017 is open
+```
+kubectl run --image=appsoa/docker-alpine-nmap --rm -it nm -- -Pn -p 27017 10.0.0.100
+```
+
+Should get something like this
+```
+Nmap scan report for 10.0.0.100
+Host is up.
+PORT      STATE    SERVICE
+27017/tcp filtered mongod
+
+Nmap done: 1 IP address (1 host up) scanned in 2.09 seconds
+```
+
+Set the correct labels to make the mongodb-deployment pod available and the port 27017 open
+```
+kubectl run --image=appsoa/docker-alpine-nmap --rm -it nm --labels="access=true" -- -Pn -p 27017 10.0.0.100
+```
+
+You should see something like this
+```
+Nmap scan report for 10.0.0.100
+Host is up (0.000075s latency).
+PORT      STATE SERVICE
+27017/tcp open  mongod
+
+Nmap done: 1 IP address (1 host up) scanned in 0.27 seconds
+```
+
+If for some reason Network Policies do not work, try stoping and starting minikube for the Network Policies to take affect
+```
+minkube stop
+minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
   * [Run a Stateless Application Using a Deployment](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
   * [Namespaces Walkthrough](https://kubernetes.io/docs/tutorials/cluster-management/namespaces-walkthrough/)
   * [Resource Quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/)
+  * [Declare Network Policy](https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/)
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
