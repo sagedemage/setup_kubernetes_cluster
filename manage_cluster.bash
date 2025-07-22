@@ -14,7 +14,7 @@ case "$1" in
         kubectl apply -f pv-pvc/
         kubectl apply -f statefulsets/
         kubectl apply -f cronjobs/
-        kubectl apply -f pods/
+        kubectl apply -l app!=default-mem-demo -f pods/
         kubectl apply -f limitranges/
         kubectl apply -f networkpolicies/
         kubectl apply -f priorityclasses/
