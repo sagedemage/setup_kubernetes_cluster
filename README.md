@@ -778,6 +778,44 @@ memory      1Gi   1Gi
 pods        1     10
 ```
 
+### Configure Default Memory Requests and Limits for a Namespace
+
+Create the LimitRange in the namespace
+```
+kubectl apply -f limitranges/mem_limit_range.yaml --namespace=development
+```
+
+Create the MySQL Pod
+```
+kubectl apply -f pods/mysql.yaml --namespace=development
+```
+
+View detailed information about the MySQL Pod
+```
+kubectl get pod default-mem-demo -o=yaml --namespace=development
+```
+
+Your output should look something like this
+```
+...
+containers:
+...
+  image: mysql:lts
+  imagePullPolicy: Always
+  name: default-mem-demo-ctr
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      memory: 256Mi
+...
+```
+
+Delete the MySQL Pod
+```
+kubectl delete pod default-mem-demo --namespace=development
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
