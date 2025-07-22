@@ -75,6 +75,9 @@ case "$1" in
         # install cilium
         cilium install
         ;;
+    "setup-replica-set")
+        kubectl exec -it mongo-sfs-0 -- mongosh < mongosh/query.js && echo ""
+        ;;
     *)
         echo "start-minikube                start a minikube cluster using Docker"
         echo "apply-all                     apply all the configurations to resources for the cluster"
@@ -83,6 +86,7 @@ case "$1" in
         echo "create-namespaces             create all namespaces for the cluster"
         echo "create-secrets                create all secrets for the cluster"
         echo "install-dependencies          install all dependencies for the cluster"
+        echo "setup-replica-set             setup replica set via mongosh"
         ;;
 esac
 
