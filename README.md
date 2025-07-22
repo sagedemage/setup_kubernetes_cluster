@@ -344,9 +344,14 @@ You should have something like this
 
 ## Configure automatic scaling
 
-Install the Metrics Server
+Add the helm chart repository for Metrics Server
 ```
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/ -n kube-system
+```
+
+Install the Metrics Server helm chart
+```
+helm upgrade --install metrics-server metrics-server/metrics-server -n kube-system
 ```
 
 View the status of the metrics server pods
@@ -362,12 +367,17 @@ metrics-server-867d48dc9c-q7dsh    0/1     Running   0               2s
 ...
 ```
 
-Containers in the Metrics Server are not running due to TLS certificate issues. To resolve this. execute the command to edit the metrics server deployment
+Containers in the Metrics Server are not running due to TLS certificate issues. To resolve this, execute the command to patch the metrics server deployment to bypass TLS verification with a patch file
 ```
-kubectl edit deployment metrics-server -n kube-system
+kubectl patch deployment metrics-server --patch-file metrics_server_deployment/patch.yaml -n kube-system
 ```
 
-Add the following commands to the container spec to bypass TLS verification
+Verify the metrics-server deployment config is correct
+```
+kubectl get deployment metrics-server -n kube-system -o yaml
+```
+
+The config should look like this
 ```
 ...
 spec:
