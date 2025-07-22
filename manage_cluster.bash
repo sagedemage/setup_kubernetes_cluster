@@ -61,7 +61,9 @@ case "$1" in
         minikube addons enable ingress
 
         # install metrics server
-        kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+        helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/ -n kube-system
+        helm upgrade --install metrics-server metrics-server/metrics-server -n kube-system
+        kubectl patch deployment metrics-server --patch-file metrics_server_deployment/patch.yaml -n kube-system
 
         # install prometheus and grafana
         helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
