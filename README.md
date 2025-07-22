@@ -167,6 +167,81 @@ Create a pod to access backup files
 kubectl apply -f pods/backup-access.yaml
 ```
 
+Add the helm chart repository for Metrics Server
+```
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/ -n kube-system
+```
+
+Install the Metrics Server helm chart
+```
+helm upgrade --install metrics-server metrics-server/metrics-server -n kube-system
+```
+
+Containers in the Metrics Server are not running due to TLS certificate issues. To resolve this, execute the command to patch the metrics server deployment to bypass TLS verification with a patch file
+```
+kubectl patch deployment metrics-server --patch-file patches/metrics_server_deployment.yaml -n kube-system
+```
+
+Define an HPA resource that specifies how and when to scale the MongoDB staefulset using the command
+```
+kubectl autoscale statefulset mongo-sfs --min=3 --max=10 --cpu-percent=50
+```
+
+Add the prometheus-community helm chart
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+```
+
+Install kube-prometheus-stack using helm chart
+```
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack
+```
+
+Apply the config for the prometheus-server-ext-service service
+```
+kubectl apply -f services/prometheus-server-ext-service.yaml
+```
+
+Apply the grafana-ext-service service
+```
+kubectl apply -f services/grafana-ext-service.yaml
+```
+
+Install the Prometheus MongoDB Exporter
+```
+helm install prometheus-mongodb-exporter prometheus-community/prometheus-mongodb-exporter -f mongodb-exporter/values.yaml
+```
+
+To access the Prometheus MongoDB Exporter, apply the prometheus-mongodb-exporter-ext-service service config
+```
+kubectl apply -f services/prometheus-mongodb-exporter-ext-service.yaml
+```
+
+Create low, medium, and high priority classes
+```
+kubectl apply -f priorityclasses/
+```
+
+Create quota object which matches it with pods at specific priorities
+```
+kubectl apply -f resourcequotas/quota.yaml
+```
+
+Create the LimitRange in the namespace
+```
+kubectl apply -f limitranges/mem_limit_range.yaml --namespace=development
+```
+
+Install Cilium into the Kubernetes cluster
+```
+cilium install
+```
+
+Create the access-mongodb network policy to limit access to the mongodb-service service
+```
+kubectl apply -f networkpolicies/mongodb-policy.yaml
+```
+
 ## Default username and password for Mongo Express
 
 username: admin
@@ -898,7 +973,7 @@ PORT      STATE SERVICE
 Nmap done: 1 IP address (1 host up) scanned in 0.27 seconds
 ```
 
-If for some reason Network Policies do not work, try stoping and starting minikube for the Network Policies to take affect
+If for some reason Network Policies do not work, try stopping and starting minikube for the Network Policies to take affect
 ```
 minkube stop
 minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
