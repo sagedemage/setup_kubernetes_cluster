@@ -816,6 +816,18 @@ Delete the MySQL Pod
 kubectl delete pod default-mem-demo --namespace=development
 ```
 
+### Install the Cilium Network Policy Provider
+
+Make sure to start up a minikube cluster prepared for installing cilium with the --cni flag
+```
+minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+```
+
+Install Cilium into the Kubernetes cluster
+```
+cilium install
+```
+
 ### Declare Network Policy
 #### Test the connection of the mongodb-deployment pod by accessing it from another Pod
 
@@ -884,6 +896,7 @@ minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
   * [Namespaces Walkthrough](https://kubernetes.io/docs/tutorials/cluster-management/namespaces-walkthrough/)
   * [Resource Quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/)
   * [Declare Network Policy](https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/)
+  * [Use Cilium for NetworkPolicy](https://kubernetes.io/docs/tasks/administer-cluster/network-policy-provider/cilium-network-policy/)
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
@@ -902,3 +915,4 @@ minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
 * [Prometheus Monitoring for Kubernetes Cluster [Tutorial] - spacelift](https://spacelift.io/blog/prometheus-kubernetes)
 * [prometheus-community/prometheus-mongodb-exporter - Artifact Hub](https://artifacthub.io/packages/helm/prometheus-community/prometheus-mongodb-exporter)
 * [kube-prometheus-stack - prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)
+* [Cilium Quick Installation - docs.cilium.io](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/)
