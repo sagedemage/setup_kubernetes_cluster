@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: default-mem-demo
+  labels:
+    app: default-mem-demo
 spec:
   containers:
   - name: default-mem-demo-ctr
