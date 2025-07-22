@@ -741,7 +741,7 @@ kubectl apply -f priorityclasses/
 
 Create quota object which matches it with pods at specific priorities
 ```
-kubectl apply -f quota.yaml
+kubectl apply -f resourcequotas/quota.yaml
 ```
 
 Very the used stats for `pods-low` and `pods-medium` priority quotas has changed but not `pods-high` quota
