@@ -369,7 +369,7 @@ metrics-server-867d48dc9c-q7dsh    0/1     Running   0               2s
 
 Containers in the Metrics Server are not running due to TLS certificate issues. To resolve this, execute the command to patch the metrics server deployment to bypass TLS verification with a patch file
 ```
-kubectl patch deployment metrics-server --patch-file metrics_server_deployment/patch.yaml -n kube-system
+kubectl patch deployment metrics-server --patch-file patches/metrics_server_deployment.yaml -n kube-system
 ```
 
 Verify the metrics-server deployment config is correct
