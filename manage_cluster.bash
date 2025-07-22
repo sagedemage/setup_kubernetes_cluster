@@ -2,9 +2,6 @@
 
 case "$1" in
     "start-minikube")
-        minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium --namespace=development
-        ;;
-    "create-new-minikube")
         minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
         ;;
     "apply-all")
@@ -77,8 +74,7 @@ case "$1" in
         cilium install
         ;;
     *)
-        echo "start-minikube                start a minikube cluster using Docker and with the development namespace"
-        echo "create-new-minikube           create a new minikube cluster using Docker"
+        echo "start-minikube                start a minikube cluster using Docker"
         echo "apply-all                     apply all the configurations to resources for the cluster"
         echo "delete-all                    delete all the resources of the cluster"
         echo "switch-to-dev                 switch to the development namespace"
