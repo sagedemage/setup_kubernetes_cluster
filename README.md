@@ -234,6 +234,11 @@ rs.initiate({
 })
 ```
 
+Run the command if you want to initialize the replica set via a query file
+```
+kubectl exec -it mongo-sfs-0 -- mongosh < mongosh/query.js && echo ""
+```
+
 To get the hostnames that maps to the pods' IP address for the mongo-sfs-0, mongo-sfs-1, and mongo-sfs-2 pods, use these commands
 ```
 kubectl exec -it mongo-sfs-0 -- bash -c "cat /etc/hosts"
