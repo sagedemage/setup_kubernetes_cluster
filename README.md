@@ -292,6 +292,16 @@ ls
 
 ## Restore MongoDB via a backup
 
+Simulate a failure
+```
+kubectl delete deployment mongodb-deployment
+```
+
+Start up the mongodb deployment
+```
+kubectl apply -f deployments/mongodb-config.yaml
+```
+
 Go inside the backup-access pod in a terminal
 ```
 kubectl exec -it backup-access -- bash
