@@ -4,6 +4,7 @@ metadata:
   name: backup-access
   labels:
     app: backup-access
+    access: "true"
 spec:
   containers:
     - name: mongodb
