@@ -34,3 +34,8 @@
     ```
     ./manage_cluster.bash setup-replica-set
     ```
+
+8.  Define an HPA resource that specifies how and when to scale the MongoDB statefulset
+    ```
+    ./manage_cluster.bash define_hpa_resource
+    ```

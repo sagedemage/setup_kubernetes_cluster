@@ -76,6 +76,11 @@ case "$1" in
     "setup-replica-set")
         kubectl exec -it mongo-sfs-0 -- mongosh < mongosh/query.js && echo ""
         ;;
+
+    "define_hpa_resource")
+        # Define an HPA resource that specifies how and when to scale the MongoDB statefulset
+        kubectl autoscale statefulset mongo-sfs --min=3 --max=10 --cpu-percent=50
+        ;;
     *)
         echo "start-minikube                start a minikube cluster using Docker"
         echo "apply-all                     apply all the configurations to resources for the cluster"
@@ -85,6 +90,7 @@ case "$1" in
         echo "create-secrets                create all secrets for the cluster"
         echo "install-dependencies          install all dependencies for the cluster"
         echo "setup-replica-set             setup replica set via mongosh"
+        echo "define_hpa_resource           define HPA resource to specify how and when to scale MongoDB statefulset"
         ;;
 esac
 
