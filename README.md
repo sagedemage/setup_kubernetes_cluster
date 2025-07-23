@@ -297,7 +297,7 @@ Go inside the backup-access pod in a terminal
 kubectl exec -it backup-access -- bash
 ```
 
-Restore a dumb of MongoDB to recover the database after a failure or crash
+Restore a dump of MongoDB to recover the database after a failure or crash
 ```
 mongorestore --host=mongodb-service --port 27017 backup/2025-07-08T21-50-01/ --username <your_username> --password <your_password>
 ```
