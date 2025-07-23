@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: mongo-express
+        access: "true"
     spec:
       containers:
         - name: mongo-express
