@@ -242,6 +242,10 @@ Create the access-mongodb network policy to limit access to the mongodb-service 
 kubectl apply -f networkpolicies/mongodb-policy.yaml
 ```
 
+### Setup the cluster via the manage_cluster.bash script
+
+[Setup the cluster via the manage_cluster script](./docs/setup_the_cluster_via_the_manage_cluster_script.md)
+
 ## Default username and password for Mongo Express
 
 username: admin
