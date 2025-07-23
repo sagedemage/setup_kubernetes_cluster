@@ -881,7 +881,7 @@ kubectl apply -f limitranges/mem_limit_range.yaml --namespace=development
 
 Create the MySQL Pod
 ```
-kubectl apply -f pods/mysql.yaml --namespace=development
+kubectl apply -f pods/default-mem-demo.yaml --namespace=development
 ```
 
 View detailed information about the MySQL Pod
