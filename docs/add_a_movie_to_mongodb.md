@@ -20,7 +20,7 @@
 
 ## Via mongosh
 
-Gain access to the mongodb shell
+Gain access to the mongodb shell of the mongodb deployment pod
 ```
 kubectl exec -it mongodb-deployment-6d9d7c68f6-58clf -- mongosh --username <your_username> --password <your_password>
 ```
