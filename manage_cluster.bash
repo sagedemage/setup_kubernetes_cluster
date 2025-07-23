@@ -14,11 +14,11 @@ case "$1" in
         kubectl apply -f pv-pvc/
         kubectl apply -f statefulsets/
         kubectl apply -f cronjobs/
-        kubectl apply -l app!=default-mem-demo -f pods/
         kubectl apply -f limitranges/
         kubectl apply -f networkpolicies/
         kubectl apply -f priorityclasses/
         kubectl apply -f resourcequotas/
+        kubectl apply -l app!=default-mem-demo -f pods/
         echo -e "\nApply all the configurations to resources for the cluster."
         ;;
     "delete-all")
@@ -72,8 +72,6 @@ case "$1" in
         # install prometheus mongodb exporter
         helm install prometheus-mongodb-exporter prometheus-community/prometheus-mongodb-exporter -f mongodb-exporter/values.yaml
 
-        # install cilium
-        cilium install
         ;;
     "setup-replica-set")
         kubectl exec -it mongo-sfs-0 -- mongosh < mongosh/query.js && echo ""
