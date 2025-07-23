@@ -508,7 +508,7 @@ nginx-deployment-5fbdcbb6d5-2rrhq     0m           7Mi
 nginx-deployment-5fbdcbb6d5-5qggg     0m           20Mi
 ```
 
-Define an HPA resource that specifies how and when to scale the MongoDB staefulset using the command
+Define an HPA resource that specifies how and when to scale the MongoDB statefulset using the command
 ```
 kubectl autoscale statefulset mongo-sfs --min=3 --max=10 --cpu-percent=50
 ```
