@@ -282,6 +282,14 @@ cd /backup
 ls
 ```
 
+## Add a movie to MongoDB
+
+[Add a movie to MongoDB](./docs/add_a_movie_to_mongodb.md)
+
+## mongosh commands
+
+[mongosh commands](./docs/mongosh_commands.md)
+
 ## Restore MongoDB via a backup
 
 Go inside the backup-access pod in a terminal
@@ -417,14 +425,6 @@ You should have something like this
       ...
 }
 ```
-
-## Add a movie to MongoDB
-
-[Add a movie to MongoDB](./docs/add_a_movie_to_mongodb.md)
-
-## mongosh commands
-
-[mongosh commands](./docs/mongosh_commands.md)
 
 ## Configure automatic scaling
 
