@@ -1053,9 +1053,9 @@ apt update
 apt install vim
 ```
 
-Copy the content of `policies/audit-policy.yaml` to `/etc/kubernetes/audit-policy.yaml`
+Copy the `policies/audit-policy.yaml` file to `/etc/kubernetes/audit-policy.yaml`
 ```
-vim /etc/kubernetes/audit-policy.yaml
+minikube cp policies/audit-policy.yaml minikube:/etc/kubernetes/audit-policy.yaml
 ```
 
 Specify the audit policy file path in `/etc/kubernetes/manifests/kube-apiserver.yaml`
