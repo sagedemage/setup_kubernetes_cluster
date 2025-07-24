@@ -1053,18 +1053,18 @@ apt update
 apt install vim
 ```
 
-Copy the content of policies/audit-policy.yaml to /etc/kubernetes/audit-policy.yaml
+Copy the content of `policies/audit-policy.yaml` to `/etc/kubernetes/audit-policy.yaml`
 ```
 vim /etc/kubernetes/audit-policy.yaml
 ```
 
-Specify the audit policy file path in /etc/kubernetes/manifests/kube-apiserver.yaml
+Specify the audit policy file path in `/etc/kubernetes/manifests/kube-apiserver.yaml`
 ```
 vim /etc/kubernetes/manifests/kube-apiserver.yaml
 ```
 
-Add the **--audit-policy-file** flag for the `/etc/kubernetes/audit-policy.yaml` file and
-the **--audit-log-path** flag for the `/var/log/kubernetes/audit/audit.log` path
+Add the **--audit-policy-file** flag to specify the `/etc/kubernetes/audit-policy.yaml` file and
+add the **--audit-log-path** flag to specify the `/var/log/kubernetes/audit/audit.log` path
 to spec.containers.command.
 ```
 ...
