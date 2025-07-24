@@ -17,3 +17,5 @@ spec:
           image: nginx:1.28.0
           ports:
             - containerPort: 80
+          securityContext:
+            allowPrivilegeEscalation: false

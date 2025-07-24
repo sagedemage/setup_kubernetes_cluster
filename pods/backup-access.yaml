@@ -20,6 +20,8 @@ spec:
         limits:
           memory: "1Gi"
           cpu: "1"
+      securityContext:
+        allowPrivilegeEscalation: false
   volumes:
     - name: backup-storage
       persistentVolumeClaim:

@@ -41,6 +41,8 @@ spec:
               volumeMounts:
                 - name: backup-storage
                   mountPath: /backup
+              securityContext:
+                allowPrivilegeEscalation: false
           restartPolicy: Never
           volumes:
             - name: backup-storage
