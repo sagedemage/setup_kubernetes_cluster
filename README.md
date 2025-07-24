@@ -1037,6 +1037,11 @@ Here are the default admission plugins
 
 ### Auditing
 
+Copy the `policies/audit-policy.yaml` file to `/etc/kubernetes/audit-policy.yaml`
+```
+minikube cp policies/audit-policy.yaml minikube:/etc/kubernetes/audit-policy.yaml
+```
+
 SSH into the minikube cluster
 ```
 minikube ssh
@@ -1051,11 +1056,6 @@ Install vim
 ```
 apt update
 apt install vim
-```
-
-Copy the `policies/audit-policy.yaml` file to `/etc/kubernetes/audit-policy.yaml`
-```
-minikube cp policies/audit-policy.yaml minikube:/etc/kubernetes/audit-policy.yaml
 ```
 
 Specify the audit policy file path in `/etc/kubernetes/manifests/kube-apiserver.yaml`
