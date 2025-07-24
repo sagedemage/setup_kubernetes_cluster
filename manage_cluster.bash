@@ -37,7 +37,7 @@ case "$1" in
         kubectl delete resourcequotas --all --force --grace-period=0
         echo -e "\nDelete all the resources of the cluster."
         ;;
-    "switch-to-dev")
+    "dev-switch")
         kubectl config use-context dev
         kubectl config get-contexts
         ;;
@@ -85,7 +85,7 @@ case "$1" in
         echo "start-minikube                start a minikube cluster using Docker"
         echo "apply-all                     apply all the configurations to resources for the cluster"
         echo "delete-all                    delete all the resources of the cluster"
-        echo "switch-to-dev                 switch to the development namespace"
+        echo "dev-switch                    switch to the development namespace"
         echo "create-namespaces             create all namespaces for the cluster"
         echo "create-secrets                create all secrets for the cluster"
         echo "install-dependencies          install all dependencies for the cluster"
