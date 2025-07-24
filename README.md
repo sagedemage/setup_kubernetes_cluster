@@ -1035,6 +1035,92 @@ Here are the default admission plugins
 21. ValidatingAdmissionPolicy
 22. ValidatingAdmissionWebhook
 
+### Auditing
+
+SSH into the minikube cluster
+```
+minikube ssh
+```
+
+Login as root
+```
+sudo su
+```
+
+Install vim
+```
+apt update
+apt install vim
+```
+
+Copy the content of policies/audit-policy.yaml to /etc/kubernetes/audit-policy.yaml
+```
+vim /etc/kubernetes/audit-policy.yaml
+```
+
+Specify the audit policy file path in /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+
+Add the **--audit-policy-file** flag for the `/etc/kubernetes/audit-policy.yaml` file and
+the **--audit-log-path** flag for the `/var/log/kubernetes/audit/audit.log` path
+to spec.containers.command.
+```
+...
+spec:
+  containers:
+  - command:
+    - --audit-policy-file=/etc/kubernetes/audit-policy.yaml
+    - --audit-log-path=/var/log/kubernetes/audit/audit.log
+...
+```
+
+We need to mount the directory where the logs will be stored in the Kubernetes API server pod’s server directory so that it can see it.
+
+For spec.containers.volumeMounts:
+```
+spec:
+  containers:
+    volumeMounts:
+    ...
+    - mountPath: /etc/kubernetes/audit-policy.yaml
+      name: audit
+      readOnly: true
+    - mountPath: /var/log/kubernetes/audit/
+      name: audit-log
+      readOnly: false
+```
+
+For spec.volumes
+```
+spec:
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/audit-policy.yaml
+      type: File
+    name: audit
+  - hostPath:
+      path: /var/log/kubernetes/audit/
+      type: DirectoryOrCreate
+    name: audit-log
+```
+
+Stop minikube
+```
+minikube stop
+```
+
+Start minikube
+```
+minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+```
+
+See the resulting log file
+```
+sudo cat /var/log/kubernetes/audit/audit.log
+```
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
@@ -1046,6 +1132,7 @@ Here are the default admission plugins
   * [Admission Control in Kubernetes](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
   * [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/)
   * [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/)
+  * [Auditing](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/)
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
@@ -1066,3 +1153,4 @@ Here are the default admission plugins
 * [kube-prometheus-stack - prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)
 * [Cilium Quick Installation - docs.cilium.io](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/)
 * [How to access kube-apiserver on command line? [closed] - StackOverflow](https://stackoverflow.com/questions/56542351/how-to-access-kube-apiserver-on-command-line)
+* [A Guide to Audit Logging in Kubernetes - Medium](https://medium.com/@alparslanuysal/a-guide-to-audit-logging-in-kubernetes-1d9128d0f9d5)
