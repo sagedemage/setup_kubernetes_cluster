@@ -1118,7 +1118,7 @@ minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
 
 See the resulting log file
 ```
-sudo cat /var/log/kubernetes/audit/audit.log
+sudo tail /var/log/kubernetes/audit/audit.log
 ```
 
 ## Resources
