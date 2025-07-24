@@ -993,6 +993,48 @@ minkube stop
 minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
 ```
 
+### Admission Control in Kubernetes
+
+Get the name of the kube-apiserver pod
+```
+kubectl get -n kube-system pods | grep kube-apiserver
+```
+
+Run kube-apiserver commands in the kube-apiserver-minikube pod
+```
+kubectl exec -it kube-apiserver-minikube -n kube-system -- kube-apiserver -h
+```
+
+See which admision plugins are enabled
+```
+kubectl exec -it kube-apiserver-minikube -n kube-system -- kube-apiserver -h | grep enable-admission-plugins
+```
+
+Here are the default admission plugins
+
+1. CertificateApproval
+2. CertificateSigning
+3. CertificateSubjectRestriction
+4. ClusterTrustBundleAttest
+5. DefaultIngressClass
+6. DefaultStorageClass
+7. DefaultTolerationSeconds
+8. LimitRanger
+9. MutatingAdmissionPolicy
+10. MutatingAdmissionWebhook
+11. NamespaceLifecycle
+12. PersistentVolumeClaimResize
+13. PodSecurity
+14. PodTopologyLabels
+15. Priority
+16. ResourceQuota
+17. RuntimeClass
+18. ServiceAccount
+19. StorageObjectInUseProtection
+20. TaintNodesByCondition
+21. ValidatingAdmissionPolicy
+22. ValidatingAdmissionWebhook
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
@@ -1020,3 +1062,5 @@ minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
 * [prometheus-community/prometheus-mongodb-exporter - Artifact Hub](https://artifacthub.io/packages/helm/prometheus-community/prometheus-mongodb-exporter)
 * [kube-prometheus-stack - prometheus-community/helm-charts GitHub repository](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)
 * [Cilium Quick Installation - docs.cilium.io](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/)
+* [How to access kube-apiserver on command line? [closed] - StackOverflow](https://stackoverflow.com/questions/56542351/how-to-access-kube-apiserver-on-command-line)
+* [Admission Control in Kubernetes](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
