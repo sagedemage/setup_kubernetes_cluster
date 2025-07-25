@@ -1156,3 +1156,4 @@ sudo tail /var/log/kubernetes/audit/audit.log
 * [Cilium Quick Installation - docs.cilium.io](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/)
 * [How to access kube-apiserver on command line? [closed] - StackOverflow](https://stackoverflow.com/questions/56542351/how-to-access-kube-apiserver-on-command-line)
 * [A Guide to Audit Logging in Kubernetes - Medium](https://medium.com/@alparslanuysal/a-guide-to-audit-logging-in-kubernetes-1d9128d0f9d5)
+* [ingress is not listening on port 80 #4799 - kubernetes/ingress-nginx](https://github.com/kubernetes/ingress-nginx/issues/4799)
