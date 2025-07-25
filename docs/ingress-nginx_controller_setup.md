@@ -89,6 +89,11 @@ Create tls secret
 kubectl create secret tls tls-secret --key tls_certificate/ca.key --cert tls_certificate/ca.crt
 ```
 
+Enable the hostNetwork in ingress-nginx-controller deployment
+```
+kubectl patch deployment ingress-nginx-controller --patch-file patches/ingress-nginx-controller.yaml -n ingress-nginx
+```
+
 If everything goes well, you should see a certificate for the website at https://nginx.demo.io/.
 
 ![tls_certificate](../screenshots/tls_certificate.png)

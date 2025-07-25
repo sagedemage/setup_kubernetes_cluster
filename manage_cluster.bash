@@ -59,6 +59,7 @@ case "$1" in
         --repo https://kubernetes.github.io/ingress-nginx \
         --namespace ingress-nginx --create-namespace
         minikube addons enable ingress
+        kubectl patch deployment ingress-nginx-controller --patch-file patches/ingress-nginx-controller.yaml -n ingress-nginx
 
         # install metrics server
         helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/ -n kube-system
