@@ -12,7 +12,7 @@
 
 3. Switch to the development namespace
     ```
-    ./manage_cluster.bash switch-to-dev
+    ./manage_cluster.bash dev-switch
     ```
 
 4. Install all dependencies for the cluster
