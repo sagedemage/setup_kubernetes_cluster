@@ -81,7 +81,7 @@ openssl genrsa -out tls_certificate/ca.key 2048
 
 Create a self-signed cerficate that is valid for 365 days
 ```
-openssl req -x509 -new -nodes -days 365 -key tls_certificate/ca.key -out tls_certificate/ca.crt -subj "/CN=nginx.demo.io/O=Spirit Technologies/OU=Spirit Cloud"
+openssl req -x509 -new -nodes -days 365 -key tls_certificate/ca.key -out tls_certificate/ca.crt -subj "/CN=nginx.demo.io/O=Spirit Technologies/OU=Spirit Cloud" -addext "subjectAltName=DNS:nginx.demo.io"
 ```
 
 Create tls secret
