@@ -1,5 +1,19 @@
 # Ingress-Nginx Controller Setup
 
+## Install Nginx controller
+
+Deploy the Ingress-Nginx controller
+```
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+```
+
+Install the ingress controller via the minikube's addons system
+```
+minikube addons enable ingress
+```
+
 ## Local testing
 
 Expose the nginx-deployment
