@@ -14,6 +14,12 @@ Install the ingress controller via the minikube's addons system
 minikube addons enable ingress
 ```
 
+Uninstall Ingress-Nginx controller
+```
+helm uninstall ingress-nginx -n ingress-nginx
+kubectl delete namespace ingress-nginx
+```
+
 ## Local testing
 
 Expose the nginx-deployment
@@ -51,6 +57,11 @@ minikube tunnel
 Create an ingress resource
 ```
 kubectl apply -f ingress/ingress-nginx.yaml
+```
+
+Delete ingress resource
+```
+kubectl delete ingress ingress-nginx
 ```
 
 Edit the hosts file
@@ -92,6 +103,11 @@ kubectl create secret tls tls-secret --key tls_certificate/ca.key --cert tls_cer
 Enable the hostNetwork in ingress-nginx-controller deployment
 ```
 kubectl patch deployment ingress-nginx-controller --patch-file patches/ingress-nginx-controller.yaml -n ingress-nginx
+```
+
+Delete tls secret
+```
+kubectl delete secret tls-secret
 ```
 
 If everything goes well, you should see a certificate for the website at https://nginx.demo.io/.
