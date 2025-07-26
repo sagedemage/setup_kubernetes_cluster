@@ -1039,7 +1039,7 @@ Here are the default admission plugins
 
 Copy the `policies/audit-policy.yaml` file to `/etc/kubernetes/audit-policy.yaml`
 ```
-minikube cp policies/audit-policy.yaml minikube:/etc/kubernetes/audit-policy.yaml
+minikube cp policies/audit-policy.yaml worker:/etc/kubernetes/audit-policy.yaml -p worker
 ```
 
 SSH into the minikube cluster
