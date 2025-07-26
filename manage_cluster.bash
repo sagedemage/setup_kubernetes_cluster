@@ -2,7 +2,7 @@
 
 case "$1" in
     "start-minikube")
-        minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+        minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium --nodes 2 -p worker
         ;;
     "apply-all")
         kubectl apply -f deployments/
@@ -43,8 +43,8 @@ case "$1" in
         ;;
     "create-namespaces")
         kubectl create -f namespaces/
-        kubectl config set-context dev --namespace=development --cluster=minikube --user=minikube
-        kubectl config set-context prod --namespace=production --cluster=minikube --user=minikube
+        kubectl config set-context dev --namespace=development --cluster=worker --user=worker
+        kubectl config set-context prod --namespace=production --cluster=worker --user=worker
         ;;
     "create-mongodb-keyfile")
         bash -c "openssl rand -base64 756 > keyfiles/mongodb-keyfile"
@@ -60,7 +60,7 @@ case "$1" in
         helm upgrade --install ingress-nginx ingress-nginx \
         --repo https://kubernetes.github.io/ingress-nginx \
         --namespace ingress-nginx --create-namespace
-        minikube addons enable ingress
+        minikube addons enable ingress -p worker
         kubectl patch deployment ingress-nginx-controller --patch-file patches/ingress-nginx-controller.yaml -n ingress-nginx
 
         # install metrics server
