@@ -1044,7 +1044,7 @@ minikube cp policies/audit-policy.yaml worker:/etc/kubernetes/audit-policy.yaml 
 
 SSH into the minikube cluster
 ```
-minikube ssh
+minikube ssh -p worker
 ```
 
 Login as root
