@@ -1000,14 +1000,14 @@ Get the name of the kube-apiserver pod
 kubectl get -n kube-system pods | grep kube-apiserver
 ```
 
-Run kube-apiserver commands in the kube-apiserver-minikube pod
+Run kube-apiserver commands in the kube-apiserver-worker pod
 ```
-kubectl exec -it kube-apiserver-minikube -n kube-system -- kube-apiserver -h
+kubectl exec -it kube-apiserver-worker -n kube-system -- kube-apiserver -h
 ```
 
 See which admision plugins are enabled
 ```
-kubectl exec -it kube-apiserver-minikube -n kube-system -- kube-apiserver -h | grep enable-admission-plugins
+kubectl exec -it kube-apiserver-worker -n kube-system -- kube-apiserver -h | grep enable-admission-plugins
 ```
 
 Here are the default admission plugins
