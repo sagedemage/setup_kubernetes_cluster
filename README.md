@@ -1108,7 +1108,7 @@ spec:
 
 Stop minikube
 ```
-minikube stop
+minikube -p worker stop
 ```
 
 Start minikube
@@ -1118,7 +1118,7 @@ Start minikube
 
 See the resulting log file
 ```
-sudo tail /var/log/kubernetes/audit/audit.log
+sudo tail -n 5 /var/log/kubernetes/audit/audit.log
 ```
 
 ### Assigning Pods to Nodes using Node Affinity
