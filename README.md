@@ -45,7 +45,7 @@ Copy the values in the secret file (mongodb-secret.yaml)
 
 Start a cluster using Docker. It is recommended to use docker as the driver.
 ```
-minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium --nodes 2 -p worker
 ```
 
 Deploy the Nginx deployment
@@ -107,12 +107,12 @@ In my case, my current context is minikube
 
 Define development context
 ```
-kubectl config set-context dev --namespace=development --cluster=minikube --user=minikube
+kubectl config set-context dev --namespace=development --cluster=worker --user=worker
 ```
 
 Define production context
 ```
-kubectl config set-context prod --namespace=production --cluster=minikube --user=minikube
+kubectl config set-context prod --namespace=production --cluster=worker --user=worker
 ```
 
 Deploy the Ingress-Nginx controller
@@ -924,7 +924,7 @@ kubectl delete pod default-mem-demo --namespace=development
 
 Make sure to start up a minikube cluster prepared for installing cilium with the --cni flag
 ```
-minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium --nodes 2 -p worker
 ```
 
 Install Cilium into the Kubernetes cluster
@@ -990,7 +990,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.27 seconds
 If for some reason Network Policies do not work, try stopping and starting minikube for the Network Policies to take affect
 ```
 minkube stop
-minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+./manage_cluster.bash start-minikube
 ```
 
 ### Admission Control in Kubernetes
@@ -1113,7 +1113,7 @@ minikube stop
 
 Start minikube
 ```
-minikube start --driver=docker --cpus=4 --memory=4g --disk-size=20g --cni=cilium
+./manage_cluster.bash start-minikube
 ```
 
 See the resulting log file
