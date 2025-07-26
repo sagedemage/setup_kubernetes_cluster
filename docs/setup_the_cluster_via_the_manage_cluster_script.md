@@ -32,7 +32,7 @@
 
 7. Create tls-secret secret
     ```
-    ./manage_cluster.bash create-mongodb-keyfile
+    ./manage_cluster.bash create-tls-secret
     ```
 
 8. Setup the replica set via mongosh
