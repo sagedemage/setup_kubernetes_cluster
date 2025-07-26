@@ -46,9 +46,11 @@ case "$1" in
         kubectl config set-context dev --namespace=development --cluster=minikube --user=minikube
         kubectl config set-context prod --namespace=production --cluster=minikube --user=minikube
         ;;
-    "create-secrets")
+    "create-mongodb-keyfile")
         bash -c "openssl rand -base64 756 > keyfiles/mongodb-keyfile"
         kubectl create secret generic mongodb-keyfile --from-file=keyfiles/mongodb-keyfile
+        ;;
+    "create-tls-secret")
         openssl genrsa -out tls_certificate/ca.key 2048
         openssl req -x509 -new -nodes -days 365 -key tls_certificate/ca.key -out tls_certificate/ca.crt -subj "/CN=nginx.demo.io/O=Spirit Technologies/OU=Spirit Cloud" -addext "subjectAltName=DNS:nginx.demo.io"
         kubectl create secret tls tls-secret --key tls_certificate/ca.key --cert tls_certificate/ca.crt
@@ -88,10 +90,11 @@ case "$1" in
         echo "delete-all                    delete all the resources of the cluster"
         echo "dev-switch                    switch to the development namespace"
         echo "create-namespaces             create all namespaces for the cluster"
-        echo "create-secrets                create all secrets for the cluster"
         echo "install-dependencies          install all dependencies for the cluster"
         echo "setup-replica-set             setup replica set via mongosh"
         echo "define_hpa_resource           define HPA resource to specify how and when to scale MongoDB statefulset"
+        echo "create-mongodb-keyfile        create the mongodb-keyfile secret"
+        echo "create-tls-secret             create the tls-secret secret"
         ;;
 esac
 
