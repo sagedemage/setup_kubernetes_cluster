@@ -50,7 +50,7 @@ minikube tunnel
 
 Create an ingress resource
 ```
-kubectl apply -f ingress/nginx-ingress.yaml
+kubectl apply -f ingress/ingress-nginx.yaml
 ```
 
 Edit the hosts file
