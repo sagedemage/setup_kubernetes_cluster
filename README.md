@@ -1136,6 +1136,7 @@ sudo tail /var/log/kubernetes/audit/audit.log
 * [minikube Documentation](https://minikube.sigs.k8s.io/docs/)
   * [Basic controls](https://minikube.sigs.k8s.io/docs/handbook/controls/)
   * [minikube cp](https://minikube.sigs.k8s.io/docs/commands/cp/)
+  * [Using Multi-Node Clusters](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/)
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
