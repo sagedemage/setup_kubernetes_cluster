@@ -1121,6 +1121,63 @@ See the resulting log file
 sudo tail /var/log/kubernetes/audit/audit.log
 ```
 
+### Assigning Pods to Nodes using Node Affinity
+
+List nodes in your cluster with their labels
+```
+kubectl get nodes --show-labels
+```
+
+Add a label to the worker-m02 node
+```
+kubectl label nodes worker-m02 servertype=mongodb
+```
+
+Verify the chosen node has `servertype=mongodb` label
+```
+kubectl get nodes --show-labels
+```
+
+In deployments/mongodb-config.yaml, specify the Pod to the worker-m02 node using Node Affinity
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    apps: mongodb
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: servertype
+                operator: In
+                values:
+                - mongodb
+```
+
+Apply the mongodb-deployment deployement
+```
+kubectl apply -f deployments/mongodb-config.yaml
+```
+
+Verify the node is running on your chosen node
+```
+kubectl get pods --output=wide
+```
+
+Make sure the mongodb-deployment pod is in the worker-m02 node
+```
+NAME                                                        READY   STATUS
+mongodb-deployment-6f6574b48-7rwmq                          1/1     Running     0          45m     10.244.1.208   worker-m02   <none>           <none>
+```
+
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
@@ -1137,6 +1194,7 @@ sudo tail /var/log/kubernetes/audit/audit.log
   * [Basic controls](https://minikube.sigs.k8s.io/docs/handbook/controls/)
   * [minikube cp](https://minikube.sigs.k8s.io/docs/commands/cp/)
   * [Using Multi-Node Clusters](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/)
+  * [Assign Pods to Nodes using Node Affinity](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/)
 * [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
 * [mongo-express Docker image](https://hub.docker.com/_/mongo-express)
 * [Installation Guide - Ingress-Nginx Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
