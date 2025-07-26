@@ -34,22 +34,22 @@ minikube dashboard
 
 Halt the cluster
 ```
-minikube stop
+minikube stop -p worker
 ```
 
 Delete the local cluster
 ```
-minikube delete
+minikube delete -p worker
 ```
 
 Delete all the local clusters, profiles, and its files
 ```
-minikube delete --all --purge
+minikube delete --all --purge -p worker
 ```
 
 Retrieve the IP address of minikube
 ```
-minikube ip
+minikube ip -p worker
 ```
 
 ## Externally access the services of the pods
