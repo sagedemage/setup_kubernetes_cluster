@@ -11,7 +11,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
 Install the ingress controller via the minikube's addons system
 ```
-minikube addons enable ingress
+minikube addons enable ingress -p worker
 ```
 
 Uninstall Ingress-Nginx controller
@@ -51,7 +51,7 @@ kubectl get service ingress-nginx-controller --namespace=ingress-nginx
 
 If the external IP address is still pending, run this command to connect to the LoadBalancer service
 ```
-minikube tunnel
+minikube tunnel -p worker
 ```
 
 Create an ingress resource
@@ -80,6 +80,11 @@ To get the address of the ingress, type this command
 kubectl get ingress
 ```
 
+Enable the hostNetwork in ingress-nginx-controller deployment
+```
+kubectl patch deployment ingress-nginx-controller --patch-file patches/ingress-nginx-controller.yaml -n ingress-nginx
+```
+
 If everything goes well, you should be able to access the website at http://nginx.demo.io/.
 Great job, the public website you are serving is hosted on a Kubernetes cluster!
 
@@ -98,11 +103,6 @@ openssl req -x509 -new -nodes -days 365 -key tls_certificate/ca.key -out tls_cer
 Create tls secret
 ```
 kubectl create secret tls tls-secret --key tls_certificate/ca.key --cert tls_certificate/ca.crt
-```
-
-Enable the hostNetwork in ingress-nginx-controller deployment
-```
-kubectl patch deployment ingress-nginx-controller --patch-file patches/ingress-nginx-controller.yaml -n ingress-nginx
 ```
 
 Delete tls secret
