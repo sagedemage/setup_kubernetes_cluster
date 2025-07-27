@@ -1133,7 +1133,12 @@ Add a label to the worker-m02 node
 kubectl label nodes worker-m02 servertype=mongodb
 ```
 
-Verify the chosen node has `servertype=mongodb` label
+Add a label to the worker node
+```
+kubectl label nodes worker servertype=nginx
+```
+
+Verify the chosen node has the `servertype=mongodb` and `servertype=nginx` label
 ```
 kubectl get nodes --show-labels
 ```
@@ -1172,10 +1177,25 @@ kubectl get pods --output=wide
 
 Make sure the mongodb-deployment pod is in the worker-m02 node
 ```
-NAME                                                        READY   STATUS
-mongodb-deployment-6f6574b48-7rwmq                          1/1     Running     0          45m     10.244.1.208   worker-m02   <none>           <none>
+NAME                                                        READY   STATUS      RESTARTS        AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+mongodb-deployment-66d4676cf9-2knl8                         1/1     Running     3 (145m ago)    3h54m   10.244.1.60    worker-m02   <none>           <none>
 ```
 
+In deployments/nginx-config.yaml, specify the Pod to the worker node via Node Affinity. Set the key to
+`servertype` and its value to `nginx`.
+
+
+Apply the nginx-deployment deployement
+```
+kubectl apply -f deployments/nginx-config.yaml
+```
+
+Make sure the nginx-deployment pod is in the worker node
+```
+NAME                                                        READY   STATUS      RESTARTS        AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+nginx-deployment-5b687784f-87mnf                            1/1     Running     0               14s     10.244.0.182   worker       <none>           <none>
+nginx-deployment-5b687784f-d47rf                            1/1     Running     0               16s     10.244.0.197   worker       <none>           <none>
+```
 
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
