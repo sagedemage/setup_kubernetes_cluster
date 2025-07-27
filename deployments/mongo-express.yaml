@@ -48,3 +48,12 @@ spec:
                   key: mongo-root-password
           securityContext:
             allowPrivilegeEscalation: false
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: servertype
+                operator: In
+                values:
+                - mongodb
