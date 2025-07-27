@@ -17,3 +17,12 @@ spec:
           image: nginx:1.28.0
           ports:
             - containerPort: 80
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: servertype
+                operator: In
+                values:
+                - nginx
