@@ -27,7 +27,7 @@ spec:
                 values:
                 - nginx
       tolerations:
-      - key: "servertype"
+      - key: "noservertype"
         operator: "Equal"
         value: "mongodb"
         effect: "NoSchedule"

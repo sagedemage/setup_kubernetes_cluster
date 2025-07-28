@@ -24,7 +24,7 @@ spec:
   restartPolicy: Always
   priorityClassName: low
   tolerations:
-    - key: "servertype"
+    - key: "noservertype"
       operator: "Equal"
       value: "mongodb"
       effect: "NoSchedule"
