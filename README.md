@@ -259,7 +259,9 @@ password: pass
 
 [firewall-cmd commands](./docs/firewall-cmd_commands.md)
 
-## Verify the backup of MongoDB via mongodump works
+## Verify the Backup of MongoDB Works
+
+Verify the backup of MongoDB via mongodump works
 
 Get the name of the pod of the mongodb-backup
 ```
