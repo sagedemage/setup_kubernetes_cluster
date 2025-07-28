@@ -23,3 +23,8 @@ spec:
         allowPrivilegeEscalation: false
   restartPolicy: Always
   priorityClassName: low
+  tolerations:
+    - key: "servertype"
+      operator: "Equal"
+      value: "mongodb"
+      effect: "NoSchedule"
