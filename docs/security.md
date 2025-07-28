@@ -451,3 +451,45 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
                              servertype=mongodb:NoSchedule
 ```
+
+If the pods are not working, remove the taints that were added
+```
+kubectl taint nodes worker noservertype=nginx:NoSchedule-
+kubectl taint nodes worker-m02 noservertype=mongodb:NoSchedule-
+```
+
+To see the tolerations for the mongodb-deployment pod in a nicer format
+```
+kubectl get pod mongodb-deployment-778cc66798-kjftn -o json | jq ".spec.tolerations"
+```
+
+You should see this
+```
+[
+  {
+    "effect": "NoSchedule",
+    "key": "noservertype",
+    "operator": "Equal",
+    "value": "nginx"
+  },
+  ...
+]
+```
+
+To see the tolerations for the nginx-deployment pod in a nicer format
+```
+kubectl get pod nginx-deployment-5df88f969d-gttjk -o json | jq ".spec.tolerations"
+```
+
+You should see this
+```
+[
+  {
+    "effect": "NoSchedule",
+    "key": "noservertype",
+    "operator": "Equal",
+    "value": "mongodb"
+  },
+  ...
+]
+```
