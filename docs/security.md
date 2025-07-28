@@ -365,17 +365,18 @@ nginx-deployment-5b687784f-d47rf                            1/1     Running     
 
 Add a taint to a node using kubectl taint
 ```
-kubectl taint nodes worker servertype=nginx:NoSchedule
+kubectl taint nodes worker noservertype=nginx:NoSchedule
 ```
 
 Add a taint to a node using kubectl taint
 ```
-kubectl taint nodes worker-m02 servertype=mongodb:NoSchedule
+kubectl taint nodes worker-m02 noservertype=mongodb:NoSchedule
 ```
 
 Remove the taint added
 ```
-kubectl taint nodes node1 key1=value1:NoSchedule-
+kubectl taint nodes worker noservertype=nginx:NoSchedule-
+kubectl taint nodes worker-m02 noservertype=mongodb:NoSchedule-
 ```
 
 List all the taints added
@@ -399,7 +400,7 @@ spec:
     affinity:
     ...
     tolerations:
-    - key: "servertype"
+    - key: "noservertype"
       operator: "Equal"
       value: "nginx"
       effect: "NoSchedule"
@@ -427,12 +428,26 @@ Apply the config
 kubectl apply -f deployments/nginx-config.yaml
 ```
 
-To check if it worked, get the information of the mongodb-deployment deployment
+To check if it worked, get the information of the working mongodb-deployment pod
 ```
-kubectl describe deployment nginx-deployment | grep Tolerations
+kubectl describe pods mongodb-deployment-755b67cb45-6wtxt
 ```
 
 You should see this
 ```
-  Tolerations:     servertype=mongodb:NoSchedule
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+                             servertype=nginx:NoSchedule
+```
+
+To check if it worked, get the information of the working nginx-deployment pod
+```
+kubectl describe pod nginx-deployment-5fd9fcf87c-prbxq
+```
+
+You should see this
+```
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+                             servertype=mongodb:NoSchedule
 ```
