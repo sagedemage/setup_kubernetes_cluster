@@ -52,6 +52,11 @@ spec:
                 operator: In
                 values:
                 - mongodb
+      tolerations:
+      - key: "servertype"
+        operator: "Equal"
+        value: "nginx"
+        effect: "NoSchedule"
   volumeClaimTemplates:
     - metadata:
         name: mongo-storage
