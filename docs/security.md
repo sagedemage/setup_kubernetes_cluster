@@ -307,7 +307,7 @@ Verify the chosen node has the `servertype=mongodb` and `servertype=nginx` label
 kubectl get nodes --show-labels
 ```
 
-In deployments/mongodb-config.yaml, specify the Pod to the worker-m02 node using Node Affinity
+In `deployments/mongodb-config.yaml`, specify the Pod to the worker-m02 node using Node Affinity
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -345,7 +345,7 @@ NAME                                                        READY   STATUS      
 mongodb-deployment-66d4676cf9-2knl8                         1/1     Running     3 (145m ago)    3h54m   10.244.1.60    worker-m02   <none>           <none>
 ```
 
-In deployments/nginx-config.yaml, specify the Pod to the worker node via Node Affinity. Set the key to
+In `deployments/nginx-config.yaml`, specify the Pod to the worker node via Node Affinity. Set the key to
 `servertype` and its value to `nginx`.
 
 
@@ -359,4 +359,80 @@ Make sure the nginx-deployment pod is in the worker node
 NAME                                                        READY   STATUS      RESTARTS        AGE     IP             NODE         NOMINATED NODE   READINESS GATES
 nginx-deployment-5b687784f-87mnf                            1/1     Running     0               14s     10.244.0.182   worker       <none>           <none>
 nginx-deployment-5b687784f-d47rf                            1/1     Running     0               16s     10.244.0.197   worker       <none>           <none>
+```
+
+## Taints and Tolerations
+
+Add a taint to a node using kubectl taint
+```
+kubectl taint nodes worker servertype=nginx:NoSchedule
+```
+
+Add a taint to a node using kubectl taint
+```
+kubectl taint nodes worker-m02 servertype=mongodb:NoSchedule
+```
+
+Remove the taint added
+```
+kubectl taint nodes node1 key1=value1:NoSchedule-
+```
+
+List all the taints added
+```
+kubectl get nodes -o json | jq '.items[].spec.taints'
+```
+
+Modify the `deployments/mongodb-config.yaml` config
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    apps: mongodb
+...
+spec:
+  spec:
+    containers:
+    ...
+    affinity:
+    ...
+    tolerations:
+    - key: "servertype"
+      operator: "Equal"
+      value: "nginx"
+      effect: "NoSchedule"
+```
+
+Apply the config
+```
+kubectl apply -f deployments/mongodb-config.yaml
+```
+
+To check if it worked, get the information of the mongodb-deployment deployment
+```
+kubectl describe deployments mongodb-deployment | grep Tolerations
+```
+
+You should see this
+```
+  Tolerations:                     servertype=nginx:NoSchedule
+```
+
+Modify the `deployments/nginx-config.yaml` config. Same thing applies like for the `deployments/mongodb-config.yaml` config. The value must be `mongodb`. 
+
+Apply the config
+```
+kubectl apply -f deployments/nginx-config.yaml
+```
+
+To check if it worked, get the information of the mongodb-deployment deployment
+```
+kubectl describe deployment nginx-deployment | grep Tolerations
+```
+
+You should see this
+```
+  Tolerations:     servertype=mongodb:NoSchedule
 ```
