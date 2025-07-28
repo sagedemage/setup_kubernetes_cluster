@@ -663,6 +663,10 @@ kubectl run --rm -it --tty pingkungcurl1 --image=curlimages/curl --restart=Never
 
 [Security](./docs/security.md)
 
+## Project Tasks
+
+[Project Tasks](./docs/project_tasks.md)
+
 ## Resources
 * [Kubernetes Documentation](https://kubernetes.io/docs/home/)
   * [Viewing Pods and Nodes](https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/)
